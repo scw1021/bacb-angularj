@@ -1,0 +1,70 @@
+<div class="bacb-content container mb-5">
+   <bacb-panel [PanelTitle]='"Name Change Request"'>
+      <div class="row">
+         <h6 class="col-12" style="text-align: center;">If you wish to change
+            your name, it is critical that you enter your new name exactly as
+            written on your new Documentation.</h6>
+         <h6 class="col-12">Valid documents for a name change include</h6>
+         <ul>
+            <li>Marriage certificate</li>
+            <li>Court document</li>
+            <li>Drivers License</li>
+            <li>Legally binding documents issued by a government organization
+            </li>
+         </ul>
+      </div>
+      <form [formGroup] = "this.fg">
+         <div class="row" [formGroup] =" this.fg.get('PrefixSuffix') " >
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>Prefix</mat-label>
+                    <mat-select formControlName="Prefix" [compareWith] = "displayLObj">
+                      <mat-option  *ngFor="let prefix of prefixes$" [value]="prefix">
+                        {{ prefix | lobj  }}
+                      </mat-option>
+                    </mat-select>
+                    <!-- <input matInput type="text" formControlName="Prefix" > -->
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>Suffix</mat-label>
+                    <mat-select formControlName="Suffix" [compareWith] = "displayLObj">
+                      <mat-option  *ngFor="let suffix of suffixes$" [value]="suffix">
+                        {{ suffix | lobj  }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+         </div>
+         <div class="row" [formGroup] =" this.fg.get('NameGroup')">
+            <div class="col-4">
+                <mat-form-field class="limit">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="FirstName" >
+                    <mat-error>First Name is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field class="limit">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput type="text" formControlName="MiddleName" >
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field class="limit">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="LastName" >
+                    <mat-error>Last Name is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <app-large-file-upload style="width: 100%;" [FileTypes]="nameChangeReqFileType" [LegendText]="'Legal proof of name change'" (FileCheck)="fileCheck($event)" [SingleFileOnly] = "true"></app-large-file-upload>
+            <mat-error *ngIf="this.showFileRequiredError == true" style="width: 100%; text-align: center;">Please upload your legal proof of name change</mat-error>
+            <div class="col-12 d-flex justify-content-between" style="margin-bottom: 1.5rem; margin-top: 1rem;">
+                <button mat-raised-button color ="primary" (click)= "onClickSubmit()">Submit</button>
+                <button mat-raised-button color ="primary">Cancel</button>
+            </div>
+         </div>
+      </form>
+   </bacb-panel>
+</div>

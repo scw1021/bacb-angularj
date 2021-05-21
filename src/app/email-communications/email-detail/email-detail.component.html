@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="bacb-content container mb-5">
+  <h3 class="panel-heading bacb-panel-header text-center mb-1">
+    Email Detail
+  </h3>
+  <mat-sidenav-container class="panel panel-default bacb-panel-bg;">
+    <mat-sidenav mode="side" opened="true">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let anEmail of (emailArray | async)">
+          <button mat-button (click) = "setSelected(anEmail)">{{ anEmail.subject }}</button>
+        </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content style="padding-bottom: 2%;">
+    <div *ngIf = "(email | async) as msg">
+      <mat-card>
+        <mat-card-header style="width: 100%;">
+          <mat-icon mat-card-avatar>email</mat-icon>
+          <mat-card-title>Subject: {{msg.subject}}</mat-card-title>
+          <mat-card-subtitle class = "d-flex justify-content-between">
+            <div class = "col-6">Sent: {{msg.sendDate}}</div>
+            <div class = "col-6" style="text-align: right;">From: {{msg.authorEmail}}</div>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div [innerHTML] = "msg.messageHTML"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>

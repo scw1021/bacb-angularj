@@ -1,0 +1,36 @@
+<div *ngIf="SummaryTotals | async as SummaryTotals" class="container-fluid table-responsive mt-2">
+  <mat-table #table [dataSource]="SummaryElements | async | nonzero" class="table table-striped">
+    <mat-header-row *matHeaderRowDef="DisplayColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; let even = even; columns: DisplayColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="DisplayColumns"></mat-footer-row>
+    <ng-container matColumnDef="Continuing Education Type">
+      <mat-header-cell *matHeaderCellDef>Continuing Education Type</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.Type.Value }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef><b>Total:</b></mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="General Credits">
+      <mat-header-cell *matHeaderCellDef>General Credits</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.GeneralCredits }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{ SummaryTotals[0] }}</mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="Ethics Credits">
+      <mat-header-cell *matHeaderCellDef>Ethics Credits</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.EthicsCredits }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{ SummaryTotals[1] }}</mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="Supervision Credits">
+      <mat-header-cell *matHeaderCellDef>Supervision Credits</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.SupervisionCredits }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{ SummaryTotals[2] }}</mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="Total Credits">
+      <mat-header-cell *matHeaderCellDef>Total Credits</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.TotalCredits }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{ SummaryTotals[3] }}</mat-footer-cell>
+    </ng-container>
+  </mat-table>
+  <!-- <div class="instructions debugging">Certification Renewal Qualification:
+    {{ (ApplicationQualifications$ | async).QualifiedForBCBARenewal }}</div>
+  <div class="instructions debugging">Certification Past Cert Qualification:
+    {{ (ApplicationQualifications$ | async).QualifiedForBCBAExamViaPastCert }}</div> -->
+</div>

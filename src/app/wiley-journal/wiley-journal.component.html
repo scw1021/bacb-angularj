@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class=" bacb-content container mt-4" style = "min-height: 60rem;">
+    <div class="row" style="background-color: #f2f2f2">
+        <legend class="panel-heading bacb-panel-header">Journals</legend>
+        <p class="col-12">The BACB is pleased to provide its certificants with the following scholarly journal and database resources.</p>
+        <div class="col-12" *ngFor = "let journal of journals">
+            <a mat-raised-button color="primary" (click) = "navToJournal(journal)" style="margin: .5rem;">
+                {{journal}}
+            </a>
+        </div>
+    </div> 
+</div>

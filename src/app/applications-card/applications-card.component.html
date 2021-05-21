@@ -1,0 +1,41 @@
+<div class="panel-body tableSet">
+  <div *ngIf="Applications$ | async as Applications; else StartNewApplication">
+    <mat-table class="set" [dataSource]="Applications" class="table table-striped">
+      <mat-header-row *matHeaderRowDef="DisplayColumnStatus"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: DisplayColumnStatus;"></mat-row>
+      <ng-container class="col-8" matColumnDef="Application">
+        <mat-header-cell *matHeaderCellDef>Application</mat-header-cell>
+        <mat-cell *matCellDef="let application">{{ application.AppType.Name }} - {{ application.CertType.Abbrev }}</mat-cell>
+      </ng-container>
+      <ng-container class="col-2" matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let application">{{ application.Status }}</mat-cell>
+      </ng-container>
+      <ng-container class="col-2" matColumnDef="Link">
+        <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+        <mat-cell *matCellDef="let application">
+          <button mat-raised-button color="primary" class="" (click)="LinkExistingApplication(application)" >Edit Application</button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+    <div class="d-flex justify-content-center mb-2">
+      <button mat-raised-button color="primary" (click)="ManageApplications()">Manage Applications</button>
+    </div>
+  </div>
+  <ng-template #StartNewApplication>
+    <mat-table [dataSource]="NewApplicationsScreen" class="table table-striped">
+      <mat-header-row *matHeaderRowDef="DisplayColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: DisplayColumns;"></mat-row>
+      <ng-container matColumnDef="Application">
+        <mat-header-cell *matHeaderCellDef>Application</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.ApplicationTitle }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Link">
+        <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-raised-button color="primary" class="" (click)="LinkNewApplication(row)" >Create Application</button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+  </ng-template>
+</div>

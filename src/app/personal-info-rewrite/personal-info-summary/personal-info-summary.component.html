@@ -1,0 +1,100 @@
+<bacb-panel [PanelTitle]='"Personal Profile"'>
+<div>
+    <div id="topdiv" class="panel-body padded-summary-element">
+      <!-- Row 1 -->
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-10 pl-3 pr-3">
+          <label> Full Name </label> <br>
+            {{this.passedInForm.get('NameGrp.FullName').value}}
+        </div>
+        <!-- <div *ngIf="true" class="col-sm-2 pl-3 pr-3">
+          <button mat-raised-button color = "primary" class="btn-primary" (click)="this.OnClickEdit()">
+            <mat-icon inline="true">edit</mat-icon> Edit
+          </button>
+        </div> -->
+      </div>
+      <!-- Row 3 -->
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-6 pl-3 pr-3">
+            <label> Email </label> <br>
+            {{this.passedInForm.get('EmailGrp.Primary').value}}
+        </div>
+        <div class="col-sm-6 pl-3 pr-3">
+            <label> Secondary Email </label> <br>
+            {{this.passedInForm.get('EmailGrp.Secondary').value}}
+        </div>
+      </div>
+      <!-- Row 4 -->
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-6 pl-3 pr-3">
+            <label> Primary Phone Number </label> <br>
+            {{this.passedInForm.get('PhoneGrp.Primary.Country').value  | countryDialCode}} {{this.passedInForm.get('PhoneGrp.Primary.Number').value}} {{this.passedInForm.get('PhoneGrp.Primary.Ext').value}}
+
+            <!-- {{ PersonalData.Phone.Country.DialCode }} {{ PersonalData.Phone.Number }} {{ PersonalData.Phone.Ext }} -->
+            <!-- <span *ngIf="PersonalData.Phone.IsMobile"> (Mobile)</span> -->
+        </div>
+        <div class="col-sm-6 pl-3 pr-3">
+            <label> Secondary Phone Number </label> <br>
+            {{this.passedInForm.get('PhoneGrp.Alternative.Country').value  | countryDialCode}} {{this.passedInForm.get('PhoneGrp.Alternative.Number').value}} {{this.passedInForm.get('PhoneGrp.Alternative.Ext').value}}
+        </div>
+      </div>
+      <!-- Row 5 -->
+
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-6 pl-3 pr-3">
+          <label> Physical Address </label><br>
+          {{this.passedInForm.get('AddressGrp.BillingGrp.Address1').value}}
+          {{this.passedInForm.get('AddressGrp.BillingGrp.Address2').value}}
+          <br>
+          {{this.passedInForm.get('AddressGrp.BillingGrp.City').value | addCommasIfDataExists}}
+          {{this.passedInForm.get('AddressGrp.BillingGrp.State').value | displayName }}
+          <br>
+          {{this.passedInForm.get('AddressGrp.BillingGrp.PostalCode').value | addCommasIfDataExists}} 
+          {{this.passedInForm.get('AddressGrp.BillingGrp.Country').value | displayName}}
+        </div>
+        <div class="col-sm-6 pl-3 pr-3">
+          <label> Mailing Address </label> <br>
+          {{this.passedInForm.get('AddressGrp.ShipGrp.Address1').value}}
+          {{this.passedInForm.get('AddressGrp.ShipGrp.Address2').value}}
+          <br>
+          {{this.passedInForm.get('AddressGrp.ShipGrp.City').value | addCommasIfDataExists}}
+          {{this.passedInForm.get('AddressGrp.ShipGrp.State').value | displayName}}
+          <br>
+          {{this.passedInForm.get('AddressGrp.ShipGrp.PostalCode').value | addCommasIfDataExists}}
+          {{this.passedInForm.get('AddressGrp.ShipGrp.Country').value | displayName}}
+        </div>
+      </div>
+      <!-- Row 6 -->
+      <div class="row mt-0 mb-1">
+        <div class="col-sm-12 pl-3 pr-3 mb-3">
+            <h5> Demographic Information</h5>
+        </div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <!-- Row 7 -->
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-6 pl-3 pr-3">
+            <label> Date of Birth </label> <br>
+            {{this.passedInForm.get('DemographicGrp.DateOfBirth').value | date}}
+
+        </div>
+        <div class="col-sm-6 pl-3 pr-3">
+
+        </div>
+      </div>
+      <!-- Row 7 -->
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-6 pl-3 pr-3">
+          <label> Gender </label> <br>
+          {{this.passedInForm.get('DemographicGrp.Gender').value | lobj}}
+        </div>
+        <div class="col-sm-6 pl-3 pr-3">
+          <label> Ethnicity </label> <br>
+          {{this.passedInForm.get('DemographicGrp.Ethnicity').value | lobj}}
+        </div>
+      </div>
+      <a mat-raised-button color="primary" (click) = "onClickEdit()">Edit</a>
+    </div>
+
+</div>
+</bacb-panel>

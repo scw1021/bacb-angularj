@@ -1,0 +1,11 @@
+<div class="container">
+
+  <div class="row mt-3 mb-3">
+    <div class="col-sm-12">
+      Please select your previously uploaded files for each requested document below, or upload new documentation.
+    </div>
+  </div>
+
+  <app-large-file-upload [InstAppData]="BaseAppData" [InstComponentData]="ComponentData" [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)"></app-large-file-upload>
+
+</div>

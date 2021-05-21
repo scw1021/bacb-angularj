@@ -1,0 +1,81 @@
+<div class="bacb-panel-light mb-4">
+  <div class="px-4 py-4">
+    <div class="instructions">Please input the information for your BACB related learning experience</div>
+    <div class="pt-4">
+      <form [formGroup]="InputForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="width-100">
+              <mat-label>Activity Title</mat-label>
+              <input type="text" matInput formControlName="Activity">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['Activity'].valid && InputForm.controls['Activity'].touched">
+              Activity Title Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="StartDatePicker" formControlName="StartDate">
+              <mat-datepicker-toggle matSuffix [for]="StartDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #StartDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['StartDate'].valid && InputForm.controls['StartDate'].touched">
+              Start Date Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="EndDatePicker" formControlName="EndDate">
+              <mat-datepicker-toggle matSuffix [for]="EndDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #EndDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['EndDate'].valid && InputForm.controls['EndDate'].touched">
+              End Date Required!
+            </mat-error>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>General Credit Hours</mat-label>
+              <input type="text" matInput formControlName="GeneralCredits">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['GeneralCredits'].valid && InputForm.controls['GeneralCredits'].touched">
+              General Credits Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Ethics Credit Hours</mat-label>
+              <input type="text" matInput formControlName="EthicsCredits">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['EthicsCredits'].valid && InputForm.controls['EthicsCredits'].touched">
+              Ethics Credits Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Supevision Hours</mat-label>
+              <input type="text" matInput formControlName="SupervisionCredits">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['SupervisionCredits'].valid && InputForm.controls['SupervisionCredits'].touched">
+              Supervision Credits Required!
+            </mat-error>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 ">
+            <button mat-raised-button color = "primary" (click)="Save()">
+              <mat-icon inline="true">add_box</mat-icon>&nbsp; Save
+            </button>
+            <button mat-raised-button color = "primary" (click)="Cancel()">
+              <mat-icon inline="true">add_box</mat-icon>&nbsp; Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

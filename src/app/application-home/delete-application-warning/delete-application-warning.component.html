@@ -1,0 +1,17 @@
+<p>Warning. You are about to delete an application. You will lose all work,
+   files and references to this application.</p>
+<h6 style="text-align: center; width: 100%;">
+    <b>   
+        Only delete if you are sure this application is unneeded
+    </b>
+</h6>
+<div class="d-flex flex-row justify-content-center">
+   <mat-checkbox style="text-align: center;" color="primary"
+      [(ngModel)]="iUnderstand">I understand</mat-checkbox>
+</div>
+<div class="d-flex flex-row justify-content-between">
+   <button mat-raised-button color="primary" (click)="onClickDelete()"
+      [disabled]="!iUnderstand">Delete my application</button>
+   <button mat-raised-button color="primary"
+      (click)="onClickCancel()">Cancel</button>
+</div>

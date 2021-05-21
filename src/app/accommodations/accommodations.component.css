@@ -1,0 +1,35 @@
+
+/* grid.layoutit.com?id=kmrjlEr */
+.grid-container {
+  padding: 5%;
+  display: grid;
+  grid-template-columns: 1fr 01fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 0.5fr 0.5fr 01fr 1fr 1fr 1fr;
+  gap: 5px 5px;
+  grid-template-areas:
+    "explain explain explain explain explain explain"
+    "left-checkbox left-checkbox left-checkbox right-checkbox right-checkbox right-checkbox"
+    "left-checkbox left-checkbox left-checkbox right-checkbox right-checkbox right-checkbox"
+    "other other other other other other"
+    "left-dropdown left-dropdown left-dropdown right-dropdown right-dropdown right-dropdown"
+    "file-upload file-upload file-upload file-upload file-upload file-upload"
+    "file-upload file-upload file-upload file-upload file-upload file-upload"
+    "summary summary summary summary summary summary"
+    "summary summary summary summary summary summary";
+}
+
+.explain { grid-area: explain; }
+
+.left-checkbox { grid-area: left-checkbox; }
+
+.right-checkbox { grid-area: right-checkbox; }
+
+.left-dropdown { grid-area: left-dropdown; }
+
+.right-dropdown { grid-area: right-dropdown; }
+
+.file-upload { grid-area: file-upload; }
+
+.summary { grid-area: summary; }
+
+.other { grid-area: other; }

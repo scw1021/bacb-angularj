@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="row mt-3 mb-3">
+    <div class="col-sm-12" *ngIf="1">
+      <!-- FIXME - need to use Cert Type -->
+      <p class="instructions">
+        Please provide details for your new application.
+      </p>
+      <p class="instructions">
+        Add your coursework information below. For current coursework requirements,
+        visit the <a [href]="'https://www.bacb.com/bcba/'" ExternalUrl target="_blank">BCBA requirements webpage</a>.
+      </p>
+      <br>
+    </div>
+    <div class="col-sm-12" *ngIf="0">
+      <p class="instructions">
+        Please provide details for your new application.
+      </p>
+      <p class="instructions">
+        Add your coursework information below. For current coursework requirements,
+        visit the <a [href]="'https://www.bacb.com/bcaba/'" ExternalUrl target="_blank">BCaBA requirements
+          webpage</a>.
+      </p>
+      <br>
+    </div>
+    <!-- <a [href]="FIXME - make a button to display AltCourse" ExternalUrl>Don't see your course?</a> -->
+  </div>
+  <div class="row mt-4">
+
+    <div class="col-sm-12">
+
+      <div class="panel panel-default bacb-panel-bg">
+        <legend class="panel-heading bacb-panel-header">
+          <div class="small-container">
+            <div class="bacb-panel-header-text">Qualifying Coursework</div>
+            <div class="fill"></div>
+            <div><button mat-raised-button color="primary" (click)="OnClickAddCoursework()">
+                <mat-icon inline="true">add_box</mat-icon>&nbsp; {{ ShowForm ? "Hide Coursework Form" : "Show Coursework Form" }}
+              </button></div>
+          </div>
+        </legend>
+        <div *ngIf="ShowForm">
+          <div class="panel panel-default bacb-panel-bg">
+            <legend class="panel-heading bacb-panel-header">
+              <div class="small-container">
+                <div class="bacb-panel-header-text">Select Courses</div>
+                <div class="fill"></div>
+                <div></div>
+              </div>
+            </legend>
+            <form [formGroup]="formGroup">
+              <div class="row col-12">
+                <mat-form-field class="col-4">
+                  <input matInput [matDatepicker]="startPicker" formControlName="FirstCourseStartDate">
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+                  <mat-label>First Course Start Date</mat-label>
+                  <!-- <input matInput formControlName="FirstCourseStartDate"> -->
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                  <input matInput [matDatepicker]="endPicker" formControlName="LastCourseEndDate">
+                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endPicker></mat-datepicker>
+                  <mat-label>Last Course End Date</mat-label>
+                </mat-form-field>
+                <div class="col-4 right-align">
+                  <button mat-raised-button color="primary" [disabled]="!EnableSubmitButton" (click)="SubmitForm()">Submit Coursework</button>
+                </div>
+              </div>
+
+              <!-- AutoSelects -->
+              <div></div>
+              <mat-form-field class="example-full-width col-6">
+                <input type="text" placeholder="Select Institution" aria-label="Number" matInput
+                  [formControl]="InstitutionControl" [matAutocomplete]="instAuto">
+                <mat-autocomplete #instAuto="matAutocomplete" [displayWith]="displayInstitution">
+                  <mat-option *ngFor="let institution of FilteredInstitutions$ | async" [value]="institution">
+                    {{institution.Name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <div></div>
+              <mat-form-field class="example-full-width col-6">
+                <input type="text" placeholder="Select Department" aria-label="Number" matInput
+                  [formControl]="DepartmentControl" [matAutocomplete]="depAuto">
+                <mat-autocomplete #depAuto="matAutocomplete" [displayWith]="displayDepartment">
+                  <mat-option *ngFor="let department of FilteredDepartments$ | async" [value]="department">
+                    {{department.Name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <div class="panel-body">
+                <!-- <div class="error"> {{ IsLoading? "IsLoading": '...' }}, {{ HasLoaded ? "HasLoaded" : '...'}} </div> -->
+
+                <div *ngIf="courseArray$ | async as CourseArray">
+                  <!-- <div> {{ CourseArray.length == 0 ? 'Null Array' : 'else' }} -- {{ CourseArray }} </div> -->
+                  <div *ngIf="CourseArray.length; else LoadingBlock">
+                    <table mat-table [dataSource]="CourseArray">
+                      <ng-container matColumnDef="skip">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let course" class="col-0"></td>
+                      </ng-container>
+                      <ng-container matColumnDef="Course #">
+                        <th mat-header-cell *matHeaderCellDef> Course #</th>
+                        <td #firstColumn mat-cell *matCellDef="let course" class="skinny"> {{course.Number}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef> Name</th>
+                        <td mat-cell *matCellDef="let course" class="thicc"> {{course.Title}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Edition">
+                        <th mat-header-cell *matHeaderCellDef>Edition</th>
+                        <td mat-cell *matCellDef="let course" class="skinny"> {{course.Edition | edition}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Level">
+                        <th mat-header-cell *matHeaderCellDef>Level</th>
+                        <td mat-cell *matCellDef="let course" class="skinny"> {{course.CreditLevel | lobj}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Duration">
+                        <th mat-header-cell *matHeaderCellDef>Duration</th>
+                        <td mat-cell *matCellDef="let course" class="skinny center">
+                          <!-- date:"shortDate" for 8/11/19 -->
+                          <div>{{course.Date.Start ? (course.Date.Start | date) : "--" }}</div>
+                          <div>
+                            {{course.Date.End ? (course.Date.End | date ) : course.Year.End ? course.Year.End : "Ongoing" }}
+                          </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Year">
+                        <th mat-header-cell *matHeaderCellDef>Year</th>
+                        <td mat-cell *matCellDef="let course" class="skinny center">
+                          <p style="text-align:center;">{{course.Year.Start ? course.Year.Start : '--'}}</p>
+                          <p style="text-align:center;">{{course.Year.End ? course.Year.End : '--'}}</p>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="TermSelect">
+                        <th mat-header-cell *matHeaderCellDef> Semester/Term </th>
+                        <td mat-cell *matCellDef="let course" class="skinny">
+                          <div *ngIf="course.Selected">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Term</mat-label>
+                              <mat-select [formControl]="TermControl" (selectionChange)="OnSelectTerm($event, course)">
+                                <mat-option></mat-option>
+                                <mat-optgroup *ngFor="let group of TermGroup" [label]="group.name">
+                                  <mat-option *ngFor="let option of group.options" [value]="option">
+                                    {{option.Value}}
+                                  </mat-option>
+                                </mat-optgroup>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="YearSelect">
+                        <th mat-header-cell *matHeaderCellDef>Year</th>
+                        <td mat-cell *matCellDef="let course" class="skinny">
+                          <div *ngIf="course.Selected">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Year</mat-label>
+                              <mat-select [formControl]="YearControl" (selectionChange)="OnSelectYear($event, course)">
+                                <mat-option></mat-option>
+                                <mat-option *ngFor="let option of YearRange(course)" [value]="option">
+                                  {{option}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Add">
+                        <th mat-header-cell *matHeaderCellDef>Add</th>
+                        <td mat-cell *matCellDef="let course" class="thicc">
+                          <button mat-raised-button color="primary" [disabled]="course.Disabled"
+                            (click)="onClickCourse(course)">{{course.Selected ? "Remove": course.Disabled ? "Added" : "Add"}}</button>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let course; columns: displayedColumns"
+                        class="{{SelectionClass(course.Selected)}}"></tr>
+                    </table>
+                  </div>
+                  <ng-template #LoadingBlock >
+                    <div *ngIf="IsLoading; else MessageBlock"><mat-spinner></mat-spinner></div>
+                    <ng-template #MessageBlock><div *ngIf="DepartmentControl.value" class="col-12 pb-2">No courses for the given selection exist</div></ng-template>
+                  </ng-template>
+                  <div class="col-12 right-align mt-3 pb-3">
+                    <button mat-raised-button color="primary" [disabled]="!EnableSubmitButton" (click)="SubmitForm()">Submit Coursework</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <app-courseworking></app-courseworking>
+      </div>
+    </div>
+  </div>
+</div>

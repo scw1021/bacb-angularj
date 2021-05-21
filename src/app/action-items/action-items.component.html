@@ -1,0 +1,15 @@
+  <div *ngFor = "let item of actionItems$ | async; let i = index;">
+    <mat-card >
+      <mat-card-title>{{item.Type.Value}}</mat-card-title>
+      <mat-card-subtitle>
+        <h6>Status: {{item.Status.Value}}</h6>
+        <h6>Due Date: {{item.DueDate | date: 'medium'}}</h6>
+        <h6>Abstract: {{item.Abstract | slice:0:256}}</h6>
+        <button *ngIf = "item; else showless" mat-raised-button color = "primary" type = "button" (click) = "OnSelectItem(item)">See this action item</button>
+        <ng-template #showless>
+        </ng-template>
+      </mat-card-subtitle>
+
+    </mat-card>
+  </div>
+

@@ -1,0 +1,27 @@
+<div class="panel-body">
+  <table mat-table #FileTable [dataSource]="FileDataSource" class="table table-striped">
+    <tr mat-header-row *matHeaderRowDef="DisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: DisplayedColumns;"></tr>
+    <ng-container class="AllowDeleteButton ? 'col-4' : 'col-5'" matColumnDef="Type">
+      <th mat-header-cell *matHeaderCellDef>File Type</th>
+      <td mat-cell *matCellDef="let File">{{ File.Document.Type.Description }}</td>
+    </ng-container>
+    <ng-container class="col-5" matColumnDef="FileName">
+      <th mat-header-cell *matHeaderCellDef>File Name</th>
+      <td mat-cell *matCellDef="let File">{{ File.Document.Name }}</td>
+    </ng-container>
+    <ng-container class="col-2" matColumnDef="Date">
+      <th mat-header-cell *matHeaderCellDef>Submission Date</th>
+      <td mat-cell *matCellDef="let File">{{ File.Document.Date ? ( File.Document.Date | date) : 'NOT SUBMITTED' }}</td>
+    </ng-container>
+    <!-- <ng-container class="AllowDeleteButton ? 'col-1' : ''" *ngIf="AllowDeleteButton" matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let File">
+        <button  matTooltip="Delete the Accommodation File" type="button" class="mx-1 btn btn-link border"
+        *ngIf="File.Document.Date" (click)="OnClickDelete(File)">
+          <mat-icon class="bacb-icon">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+  </table>
+</div>

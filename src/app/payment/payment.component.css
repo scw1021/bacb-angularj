@@ -1,0 +1,36 @@
+.payment-header {
+  color: white;
+
+}
+
+.align-right {
+  text-align-last: right;
+}
+
+.icon {
+  place-content: flex-end;
+}
+
+.btn-primary {
+  background: #202945;
+  color: #eeeeee;
+  height: 40px;
+  width: 60px;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+  background: #aaa;
+  color: #202945;
+}
+
+.hosted-field {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  align-content: flex-end;
+  height: 30px;
+  font-size: 20px;
+}
+.entry-field {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}

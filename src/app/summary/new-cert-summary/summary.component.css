@@ -1,0 +1,16 @@
+.summary-header {
+  color: white;
+
+}
+
+.align-right {
+  text-align-last: right;
+}
+
+.icon {
+  place-content: flex-end;
+}
+
+::ng-deep .bacb-panel-header > .mat-expansion-indicator:after {
+  color: white;
+}

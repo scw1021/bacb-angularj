@@ -1,0 +1,138 @@
+<div class="bacb-panel-light mb-4">
+  <div class="px-4 py-4">
+    <div class="instructions">Please input the information for your Continuing Education Coursework</div>
+    <div class="pt-4">
+      <form [formGroup]="InputForm">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6">
+            <mat-form-field class="width-100">
+              <mat-label>Institution</mat-label>
+              <input type="text" matInput formControlName="InstitutionFC" [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="DisplayInstitution"
+              (optionSelected)="OnSelectInstitution($event.option.value)">
+              <!-- <mat-option *ngIf="IsLoading">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </mat-option> -->
+              <ng-container>
+                <mat-option *ngFor="let InstInstitution of FilteredInstitutions | async" [value]="InstInstitution">
+                  <span>{{ InstInstitution.Name }}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+          <div class="col-6 col-lg-3">
+            <mat-form-field>
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="StartDatePicker" formControlName="StartDate">
+              <mat-datepicker-toggle matSuffix [for]="StartDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #StartDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['StartDate'].valid && InputForm.controls['StartDate'].touched">
+              Start Date Required!
+            </mat-error>
+          </div>
+          <div class="col-6 col-lg-3">
+            <mat-form-field>
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="EndDatePicker" formControlName="EndDate">
+              <mat-datepicker-toggle matSuffix [for]="EndDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #EndDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['EndDate'].valid && InputForm.controls['EndDate'].touched">
+              End Date Required!
+            </mat-error>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Course Name</mat-label>
+              <input type="text" matInput formControlName="CourseName">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['CourseName'].valid && InputForm.controls['CourseName'].touched">
+              Course Title Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Course Number</mat-label>
+              <input type="text" matInput formControlName="CourseNumber">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['CourseNumber'].valid && InputForm.controls['CourseNumber'].touched">
+              Course Number Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="width-100">
+              <mat-label>Course Credit Hours</mat-label>
+              <input type="text" matInput formControlName="CreditHours">
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['CreditHours'].valid && InputForm.controls['CreditHours'].touched">
+              Course Credit Hours Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field class="width-100">
+              <mat-label>Course Grade</mat-label>
+              <mat-select formControlName="Grade">
+                <mat-option *ngFor="let ceType of CourseGradeOptions" [value]="ceType"> {{ceType.Value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="!InputForm.controls['Grade'].valid && InputForm.controls['Grade'].touched">
+              Course Grade Required!
+            </mat-error>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>General Credit Hours</mat-label>
+              <input type="text" matInput formControlName="GeneralCredits">
+            </mat-form-field>
+            <mat-error
+              *ngIf="!InputForm.controls['GeneralCredits'].valid && InputForm.controls['GeneralCredits'].touched">
+              General Credits Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Ethics Credit Hours</mat-label>
+              <input type="text" matInput formControlName="EthicsCredits">
+            </mat-form-field>
+            <mat-error
+              *ngIf="!InputForm.controls['EthicsCredits'].valid && InputForm.controls['EthicsCredits'].touched">
+              Ethics Credits Required!
+            </mat-error>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="width-100">
+              <mat-label>Supevision Hours</mat-label>
+              <input type="text" matInput formControlName="SupervisionCredits">
+            </mat-form-field>
+            <mat-error
+              *ngIf="!InputForm.controls['SupervisionCredits'].valid && InputForm.controls['SupervisionCredits'].touched">
+              Supervision Credits Required!
+            </mat-error>
+          </div>
+        </div>
+        <div class="instructions">Please supply your course syllabus and updated transcript to complete your Continuing Education entry</div>
+        <div class="col-12 left-align">
+          <app-large-file-upload [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)"
+            [LegendText]="'Certificate of Completion Document Upload'"></app-large-file-upload>
+        </div>
+        <div class="row">
+          <div class="col-12 ">
+            <button mat-raised-button color = "primary" (click)="Save()">
+              <mat-icon inline="true">add_box</mat-icon>&nbsp; Save
+            </button>
+            <button mat-raised-button color = "primary" (click)="Cancel()">
+              <mat-icon inline="true">add_box</mat-icon>&nbsp; Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

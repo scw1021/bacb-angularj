@@ -1,0 +1,168 @@
+<loading></loading>
+<app-header></app-header>
+<div class="bacb-content container mb-5">
+
+  <!-- profile -->
+  <div class="row mt-2 mb-2">
+    <div class="col-sm-12">
+      <div class="d-flex justify-content-center">
+        <h1 class="page-title mb-2">BACB ACCOUNT PORTAL</h1>
+      </div>
+      <mat-accordion class="">
+        <mat-expansion-panel
+          style="border-bottom: 5px solid #202945; border-top: 5px solid #202945; background-color: #D2DCE2; "
+          [expanded]="true">
+          <!-- <mat-expansion-panel-header>
+            <mat-panel-title class="d-flex justify-content-center">
+              <h4> Profile </h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header> -->
+          <section style="background-color:#D2DCE2;">
+
+            <div class="row borderless" *ngFor="let CurrentUser of [(CurrentUser$ | async)]">
+
+              <div  class="col-sm-6 justify-content-center">
+                <ul class="list-group borderless m-0">
+                  <li class="list-group-item font-weight-bold portal-text m-1 p-0">Name: <span class="portal-op-text">
+                      {{ CurrentUser.FullName }} </span></li>
+                  <div *ngIf="CurrentUser.Addresses[0]?.Address1">
+                    <li class="list-group-item font-weight-bold portal-text my-1 ml-1 p-0">Address: <span
+                        class="portal-op-text">{{ CurrentUser.Addresses[0].Address1 }} </span> </li>
+                    <li class="list-group-item font-weight-bold portal-text my-2 ml-1 p-0"> City, State, Zip: <span
+                        class="portal-op-text"> {{ CurrentUser.Addresses[0].City }}, {{ CurrentUser.Addresses[0].State.Abbrev }},
+                        {{ CurrentUser.Addresses[0].PostalCode }} </span> </li>
+                    <li class="list-group-item font-weight-bold portal-text my-1 ml-1 p-0">Country: <span
+                        class="portal-op-text"> {{ CurrentUser.Addresses[0].Country.Name }} </span> </li>
+
+                  </div>
+                  <li class="list-group-item font-weight-bold portal-text m-1 p-0">Email:
+                    <span class="portal-op-text">
+                      {{ CurrentUser.Email }}
+                    </span>
+                  </li>
+                  <li class="list-group-item font-weight-bold portal-text m-1 p-0">Primary Phone Number:
+                    <span *ngIf="CurrentUser.Phone != null" class="portal-op-text">
+                      {{ CurrentUser.Phone.Number }}
+                    </span>
+                  </li>
+
+                </ul>
+              </div>
+
+
+              <div class="col-sm-6 justify-content-center">
+                <!-- Current Cert is always instantiated, but Id is blank if there is no cert -->
+                <div *ngIf="(CurrentCertification$ | async)?.Id">
+                  <!-- I'm using an ngFor because then we only use one ASYNC call to our observable-->
+                  <div *ngFor="let Cert of [(CurrentCertification$ | async)]">
+                    <ul class="list-group borderless m-0">
+
+                      <li class="list-group-item font-weight-bold portal-text m-1 p-0">BACB ID Number:
+                        <span class="portal-op-text">
+                          {{ CurrentUser.BACBID }}
+                        </span>
+                      </li>
+                      <li class="list-group-item font-weight-bold portal-text m-1 p-0">Certification Type:
+                        <span class="portal-op-text">
+                          {{ Cert.Type.Abbrev }}
+                        </span>
+                      </li>
+                      <li class="list-group-item font-weight-bold portal-text m-1 p-0">Certification Number:
+                        <span class="portal-op-text">
+                          {{ Cert.Number }}
+                        </span>
+                      </li>
+                      <li class="list-group-item font-weight-bold portal-text m-1 p-0">Certification Status:
+                        <span class="portal-op-text">
+                          {{ Cert.GetCurrentCycle().Status.ExternalName }}
+                        </span>
+                      </li>
+                      <li class="list-group-item font-weight-bold portal-text m-1 p-0">Renewal Date:
+                        <span class="portal-op-text">
+                          {{ GetNetSuiteDate(Cert.GetCurrentCycle().RenewalDate) | date:'shortDate' }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-sm-4">
+                <ul class="list-group borderless portal-acct-preferences">
+                  <li class="list-group-item font-weight-bold">
+                    <span class="portal-op-text">Account</span><br>
+                    <span class="portal-op-text">Preferences</span><br>
+                    <span class="portal-op-text">Certification History</span><br>
+                    <span class="portal-op-text">ID Card</span><br>
+                  </li>
+                  <li class="list-group-item font-weihgt-bold">
+                    <span class="portal-op-text">08/29/2019 3:44 PM </span>
+                  </li>
+                </ul>
+              </div> -->
+
+            </div> <!-- end row -->
+
+          </section>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </div>
+
+
+  <div class="row mt-4">
+    <div class="col-12 col-md-6">
+      <div class="card profile-header-border-1 portal-box-card">
+        <div class="card-header d-flex justify-content-center profile-header profile-card-rounded">
+          <h2 class="card-title card-title-bar mb-0">EMAIL COMMUNICATIONS</h2>
+        </div>
+        <app-email-communications></app-email-communications>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card profile-header-border-1 portal-box-card">
+        <div class="card-header d-flex justify-content-center profile-header profile-card-rounded">
+          <h2 class="card-title card-title-bar mb-0">ACTION ITEMS</h2>
+        </div>
+
+        <div class="card-body profile-card-body-border">
+          <action-items class = "card-text" [navigateToDetailPage] = "true"></action-items>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(Certifications$ | async)?.length" class="col-12 col-md-6">
+      <div class="card profile-header-border-1 portal-box-card">
+        <div class="card-header d-flex justify-content-center profile-header profile-card-rounded">
+          <h2 class="card-title card-title-bar mb-0">CONTINUING EDUCATION</h2>
+        </div>
+        <!-- <div class="card-body profile-card-body-border"> -->
+          <continuing-education-summary></continuing-education-summary>
+          <!-- <button type="submit" mat-stroked-button color="primary" class="bacb-primary-btn">View More</button> -->
+        <!-- </div> -->
+        <div class="d-flex justify-content-center">
+          <button mat-flat-button class="bacb-primary-btn">Manage CEUs</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(Certifications$ | async)?.length"  class="col-12 col-md-6">
+      <div class="card profile-header-border-1 portal-box-card">
+        <div class="card-header d-flex justify-content-center profile-header profile-card-rounded">
+          <h2 class="card-title card-title-bar mb-0">SUPERVISOR INFORMATION</h2>
+        </div>
+        <div class="card-body profile-card-body-border">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <!-- <button type="submit" mat-stroked-button color="primary" class="bacb-primary-btn">View More</button> -->
+          <button mat-flat-button class="bacb-primary-btn">View More</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <news-card></news-card>
+    </div>
+  </div>
+</div> <!-- end container-->
+
+<app-footer class="footer-fixed"></app-footer>

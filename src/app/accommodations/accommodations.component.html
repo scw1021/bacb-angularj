@@ -1,0 +1,101 @@
+
+<div class = "container">
+  <div class="panel panel-default bacb-panel-bg">
+    <legend class="panel-heading bacb-panel-header">Accommodations</legend>
+    <div class="" [formGroup] = "this.accommodationForm" *ngIf = "userHasAccoms == true; else noaccoms;">
+      <div class="explain">
+        <span style = "display: block; text-align: center;">
+          <p>Are you a "qualified individual with disability" as defined by the Americans with Disabilities Act
+          requesting an accessible testing site or auxilliary aids and serviecs for your administration?</p>
+          <mat-checkbox color = "primary"
+            [(ngModel)] = "userHasAccoms"
+            [ngModelOptions] = "{standalone: true}">I am a qualified individual seeking accommodations for testing.</mat-checkbox>
+        </span>
+      </div>
+      <div class="row mx-2">
+        <div class="left-checkbox col-6" [formGroup] = "this.checkboxFormGroup">
+          <div *ngFor = "let leftCB of accomTypesCB$ | async; let even = even;">
+            <div *ngIf = "even" formGroupName = "{{leftCB.ShortDescription}}">
+              <mat-checkbox color = "primary" formControlName = "Value" >{{leftCB.ShortDescription}}</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="right-checkbox col-6" [formGroup] = "this.checkboxFormGroup">
+          <div *ngFor = "let rightCB of accomTypesCB$ | async; let odd = odd;">
+            <div *ngIf = "odd" formGroupName = "{{rightCB.ShortDescription}}">
+              <mat-checkbox color = "primary" formControlName = "Value">{{rightCB.ShortDescription}}</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" other mx-2" [formGroup] = "this.checkboxFormGroup" *ngIf = "showOther">
+        <div class="mx-3" >
+          <mat-form-field  style = "width: 100%;">
+            <textarea matInput text-area placeholder="Please describe your request in detail." formControlName = "OtherAccommodationText"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mx-2">
+        <div class="left-dropdown col-6" [formGroup] = "dropdownFormGroup">
+          <div *ngFor = "let rcb of accomTypesDD$ | async; let even = even;">
+            <div *ngIf = "even">
+              <mat-form-field class="width-100">
+                <mat-label>{{rcb[1] | titlecase}}</mat-label>
+                <mat-select formControlName="{{rcb[1]}}" [compareWith] = "compareAccoms">
+                  <mat-option [value]="null"> </mat-option>
+                  <mat-option *ngFor="let optn of rcb[0]" [value]="optn"> {{ optn.ShortDescription }} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="right-dropdown col-6" [formGroup] = "dropdownFormGroup">
+          <div *ngFor = "let rcb of accomTypesDD$ | async; let odd = odd;">
+            <div *ngIf = "odd">
+              <mat-form-field class="width-100">
+                <mat-label>{{rcb[1] | titlecase}}</mat-label>
+                <mat-select formControlName="{{rcb[1]}}" [compareWith] = "compareAccoms">
+                  <mat-option [value]="null"> </mat-option>
+                  <mat-option *ngFor="let optn of rcb[0]" [value]="optn"> {{ optn.ShortDescription }} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="file-upload" *ngIf="this.accommodationForm.dirty">
+        <app-large-file-upload [FileTypes] = "FileTypes" [AllowDeleteButton]="true" [SingleFileOnly]="true"></app-large-file-upload>
+        <div class="mb-3" style="display: flex; justify-content: center;">
+          <button mat-raised-button color ="primary" (click) = "submit()" [disabled] = "hasSubmittedFile"> Submit Accommodation Request</button>
+        </div>
+      </div>
+      <div class="summary">
+        <div>
+        </div>
+        <app-accommodation-summary></app-accommodation-summary>
+        <!-- <div style="display: flex; justify-content: space-between;">
+          <button mat-raised-button color ="primary" [disabled] = "check"> Continue </button>
+          <button mat-raised-button color ="primary"> Cancel </button>
+        </div> -->
+    </div>
+    </div>
+    <ng-template #noaccoms>
+      <div class="">
+      <div class = "explain">
+        <span style = "display: block; text-align: center;">
+          <p>Are you a "qualified individual with disability" as defined by the Americans with Disabilities Act
+          requesting an accessible testing site or auxilliary aids and serviecs for your administration?</p>
+          <mat-checkbox color = "primary"
+            [(ngModel)] = "userHasAccoms"
+            [ngModelOptions] = "{standalone: true}">I am a qualified individual seeking accommodations for testing.</mat-checkbox>
+      </span>
+    </div>
+    </div>
+    </ng-template>
+  </div>
+</div>
+
+
+<!-- <button mat-raised-button color ="primary" (click) = "refetch()"> refetch </button>
+<button mat-raised-button color ="primary" (click) = "refetchUseraccoms()"> refetch usr accoms </button> -->
+

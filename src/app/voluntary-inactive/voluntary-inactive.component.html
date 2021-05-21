@@ -1,0 +1,83 @@
+<app-header></app-header>
+<div class=" bacb-content container mt-4 col-lg-10">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex center-object">
+        <h1 class="page-title">Voluntary Inactive</h1>
+      </div>
+    </div>
+  </div>
+  <app-cert-cycle-summary class="mb-4"></app-cert-cycle-summary>
+  <div class="row mt-2">
+    <div class="col-12">
+      <div class="panel panel-default bacb-panel-bg">
+        <legend class="panel-heading bacb-panel-header pl-3 pr-3">Existing Voluntary Inactive Periods</legend>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-12">
+              <app-voluntary-inactive-summary></app-voluntary-inactive-summary>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="bacb-panel-light mb-4">
+    <div class="px-4 py-4">
+      <div class="instructions">Please input the information for your Teaching ACE Provider Event</div>
+      <div class="pt-4">
+        <form [formGroup]="InputForm">
+          <div class="row">
+            <div class="col-6 col-lg-3">
+              <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="StartDatePicker" formControlName="StartDate">
+                <mat-datepicker-toggle matSuffix [for]="StartDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #StartDatePicker></mat-datepicker>
+              </mat-form-field>
+              <!-- <mat-error *ngIf="!InputForm.controls['StartDate'].valid && InputForm.controls['StartDate'].touched">
+                Start Date Required!
+              </mat-error> -->
+            </div>
+            <div class="col-6 col-lg-3">
+              <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="EndDatePicker" formControlName="EndDate">
+                <mat-datepicker-toggle matSuffix [for]="EndDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #EndDatePicker></mat-datepicker>
+              </mat-form-field>
+              <!-- <mat-error *ngIf="!InputForm.controls['EndDate'].valid && InputForm.controls['EndDate'].touched">
+                End Date Required!
+              </mat-error> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field class="width-100">
+                <mat-label>Reason</mat-label>
+                <textarea matInput formControlName="Reason"></textarea>
+              </mat-form-field>
+              <!-- <mat-error *ngIf="!InputForm.controls['Reason'].valid && InputForm.controls['Reason'].touched">
+                ACE Event Title Required!
+              </mat-error> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 ">
+              <button mat-raised-button color="primary" (click)="Save()">
+                <mat-icon inline="true">add_box</mat-icon>&nbsp; Save
+              </button>
+              <button mat-raised-button color="primary" (click)="Cancel()">
+                <mat-icon inline="true">add_box</mat-icon>&nbsp; Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

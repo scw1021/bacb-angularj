@@ -1,0 +1,125 @@
+<div class="container">
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Personal Information
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <personal-inf [summaryLock] = "true"></personal-inf>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Information Release
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <attestation-section-summary [InstAppData]="BaseAppData" [InstComponentData]="InstComponentData"
+        (PageChange)="OnPageChange($event)" InstSectionId="1" [CanEdit]="CanEditSummary"></attestation-section-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Professional Information
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <professional-info-summary [InstAppData]="BaseAppData" [InstComponentData]="InstComponentData"
+        (PageChange)="OnPageChange($event)" [CanEdit]="CanEditSummary"></professional-info-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Other non-BACB Credentials
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <other-credentials-summary  (PageChange)="OnPageChange($event)"
+       [CanEdit]="CanEditSummary"></other-credentials-summary>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Competency Assessment
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <competency-summary [InstAppData]="BaseAppData" (PageChange)="OnPageChange($event)"
+      [InstComponentData]="InstComponentData" [InstSectionId]="6"></competency-summary>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Attestations
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <attestation-section-summary [InstAppData]="BaseAppData" [InstComponentData]="InstComponentData"
+        (PageChange)="OnPageChange($event)" InstSectionId="2" [CanEdit]="CanEditSummary"></attestation-section-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Terms and Conditions
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <attestation-section-summary [InstAppData]="BaseAppData" [InstComponentData]="InstComponentData"
+        (PageChange)="OnPageChange($event)" InstSectionId="3" [CanEdit]="CanEditSummary"></attestation-section-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="CanEditSummary" [expanded]="true" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Submit Application
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <p>By clicking submit you have found all information in this application to be true to the extent of your knowledge
+      and have made no fabrications or falsehoods.</p>
+    <p>The information included in this application will be available in future applications, but upon submission, your
+      Education, Coursework, and Other Non-BACB Credentials will be permanently linked to your account through this
+      application and may not be removed or altered.</p>
+    <p>After clicking `Submit` you will be directed to the payment page.</p>
+    <div class="col-12 align-right">
+      <button mat-raised-button color = "primary" class="btn-primary" (click)="SubmitAll()">
+        <mat-icon>check</mat-icon>Submit
+      </button>
+    </div>
+
+  </mat-expansion-panel>
+
+</div> <!-- end container -->

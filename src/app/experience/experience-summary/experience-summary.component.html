@@ -1,0 +1,82 @@
+<!--  my experience -->
+<!-- <div class="dropdown-divider"></div> -->
+<div class="row mt-4">
+  <div class="col-sm-12">
+    <div class="panel panel-default bacb-panel-bg">
+      <legend class="panel-heading bacb-panel-header">
+        <div class="small-container align-middle">
+          <div class="bacb-panel-header-text">Experience</div>
+          <div class="fill"></div>
+          <div><button  *ngIf="CanEdit" mat-raised-button color = "primary" (click)="OnClickNew()"><mat-icon inline="true">add_box</mat-icon>&nbsp; Add Experience</button></div>
+        </div>
+      </legend>
+      <div class="panel-body">
+        <mat-table [dataSource]="DataSource" class="table table-striped">
+          <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: DisplayedColumns;"></mat-row>
+          <mat-footer-row *matFooterRowDef="DisplayedColumns"></mat-footer-row>
+          <ng-container matColumnDef="Type">
+            <mat-header-cell *matHeaderCellDef>Experience Type</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">{{ Experience.Type.Name }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="Supervisors">
+            <mat-header-cell *matHeaderCellDef>Supervisors</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">
+              <mat-list>
+                <mat-list-item *ngFor="let Supervision of Experience.Supervisions">
+                  <span [ngStyle]="{'font-weight' : Supervision.IsPrimary === 'T' ? 'bold' : '' }" >{{ Supervision.Supervisor.Name }}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="StartDate">
+            <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">{{ Experience.StartDate | date }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="EndDate">
+            <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
+            <mat-cell *matCellDef="let Experience"> {{ Experience.EndDate | date }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="SupervisedHours">
+            <mat-header-cell *matHeaderCellDef matTooltip="Supervised Hours" matTooltipPosition="above">SH</mat-header-cell>
+            <mat-cell *matCellDef="let Experience"> {{ Experience.SupervisedHours }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef>{{SummaryTotals.SH}}</mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="IndependentHours">
+            <mat-header-cell *matHeaderCellDef matTooltip="Independent Hours" matTooltipPosition="above">IH</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">{{ Experience.IndependentHours }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef>{{SummaryTotals.IH}}</mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="TotalHours">
+            <mat-header-cell *matHeaderCellDef matTooltip="Total Hours" matTooltipPosition="above">TH</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">{{ Experience.TotalHours }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef>{{SummaryTotals.TH}}</mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="CalculatedHours">
+            <mat-header-cell *matHeaderCellDef matTooltip="Supervised Hours" matTooltipPosition="above">CH</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">{{ Experience.CalculatedHours }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef>{{SummaryTotals.CH}}</mat-footer-cell>
+          </ng-container>
+          <ng-container  matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let Experience">
+              <div class="row" *ngIf="CanEdit">
+                <button type="button" class="btn btn-link border" (click)="OnClickEdit(Experience)">
+                  <mat-icon class="bacb-icon">edit</mat-icon>
+                </button>
+                <button type="button" class="btn btn-link border" (click)="OnClickDelete(Experience)">
+                  <mat-icon class="bacb-icon">delete</mat-icon>
+                </button>
+              </div>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+        </mat-table>
+      </div> <!-- panel body -->
+    </div> <!-- end inner panel body -->
+  </div> <!-- end outer panel body -->
+</div>

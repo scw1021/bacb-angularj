@@ -1,0 +1,205 @@
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-sm-12" *ngIf="CertType == '1'">
+            <p class="instructions">
+                Please provide details for your new application.
+            </p>
+            <p class="instructions">
+              Add your degree information below. For current education requirements,
+              visit the <a [href]="'https://www.bacb.com/bcba/'" ExternalUrl target="_blank" style="color: #005072;">BCBA page</a>.
+              and download the latest eligibility requirements.
+            </p>
+        </div>
+        <div class="col-sm-12" *ngIf="CertType == '2'">
+            <p class="instructions">
+                Please provide details for your new application.
+            </p>
+            <p class="instructions">
+              Add your degree information below. For current education requirements,
+              visit the <a [href]="'https://www.bacb.com/bcaba/'" ExternalUrl target="_blank" style="color: #005072;">BCaBA page</a>
+              and download the latest eligibility requirements.
+            </p>
+        </div>
+    </div>
+
+    <!--  my experience -->
+    <experience-summary [CanEdit]="true" (EditExperience)=OnClickEdit($event) (AddExperience)="OnClickNew()"></experience-summary>
+    <!--  New / edit experience form -->
+    <div class="row mt-4" *ngIf="IsVisibleNew !== IsVisibleEdit">
+        <div class="col-sm-12">
+            <div class="panel panel-default bacb-panel-bg">
+                <legend class="panel-heading bacb-panel-header" *ngIf="IsVisibleEdit">Edit Experience</legend>
+                <legend class="panel-heading bacb-panel-header" *ngIf="IsVisibleNew">Add Experience</legend>
+                <div class="panel-body" *ngIf="!FirstCourseStartDate && AppType == '1'; else AddExperienceElement">
+                    <div class="col-sm-10 mb-3 ml-3 mr-3 mt-3">In order for an experience record to be valid for this application the start date of the experience record
+                    must occure after the start date of the first coursework.  Please go back to the previous tab and add the
+                    first coursework before you start entering experience records.</div>
+                </div>
+                <ng-template #AddExperienceElement>
+                  <div class="panel-body">
+                    <span class="mb-3 ml-3 mr-3">Submit a new experience for each final Experience form.</span>
+                    <form [formGroup]="ExpForm" class="mt-2 mb-2">
+                      <!-- Row 1 -->
+                      <div class="row mb-3">
+                        <div class="col-sm-4 ml-3 mr-3" *ngIf="1 == 0">
+                          <mat-form-field>
+                            <mat-label>Experience Id</mat-label>
+                            <input matInput readonly formControlName="Id">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-4 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Supervisor Relationship</mat-label>
+                            <mat-select [compareWith]="CompareListObj" formControlName="RepresentationType">
+                              <mat-option *ngFor="let RepType of RepresentationTypes" [value]="RepType">
+                                {{ RepType.Value }} </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!ExpForm.controls['RepresentationType'].valid && ExpForm.controls['RepresentationType'].touched">
+                              Supervisor Relationship is required
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <!-- Row 2 -->
+                      <div class="row mb-3">
+                        <div class="col-sm-4 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Start Date</mat-label>
+                            <input matInput [matDatepicker]="StartDatePicker" formControlName="StartDate">
+                            <mat-datepicker-toggle matSuffix [for]="StartDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #StartDatePicker></mat-datepicker>
+                            <mat-error *ngIf="!ExpForm.controls['StartDate'].valid && ExpForm.controls['StartDate'].touched">
+                              {{ StartDateError }}
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div class="col-sm-4 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>End Date</mat-label>
+                            <input matInput [matDatepicker]="EndDatePicker" formControlName="EndDate">
+                            <mat-datepicker-toggle matSuffix [for]="EndDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #EndDatePicker></mat-datepicker>
+                            <mat-error *ngIf="!ExpForm.controls['EndDate'].valid && ExpForm.controls['EndDate'].touched">
+                              {{ EndDateError }}
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+                      </div>
+                      <!-- Row 3 -->
+                      <div class="row mt-4">
+
+                        <div class="col-sm-3 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Type</mat-label>
+                            <mat-select [compareWith]="CompareExpType" formControlName="Type" (selectionChange)="OnSelectType($event.value)">
+                              <mat-option *ngFor="let ExpType of ExperienceTypes" [value]="ExpType">
+                                {{ ExpType.Name }} </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!ExpForm.controls['Type'].valid && ExpForm.controls['Type'].touched">
+                              Experience Type is required.
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="ExpForm.controls['Type'].valid && ExpForm.controls['Type'].value?.NetSuiteId > 1"
+                          class="col-sm-3 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Practicum Course Name</mat-label>
+                            <input matInput formControlName="PracticumName">
+                            <mat-error *ngIf="!ExpForm.controls['PracticumName'].valid && ExpForm.controls['PracticumName'].touched">
+                              Independent Hours are required.
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="ExpForm.controls['Type'].valid && ExpForm.controls['Type'].value?.NetSuiteId > 1"
+                          class="col-sm-3 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Practicum Course ID</mat-label>
+                            <input matInput formControlName="PracticumId">
+                            <mat-error *ngIf="!ExpForm.controls['PracticumId'].valid && ExpForm.controls['PracticumId'].touched">
+                              Independent Hours are required.
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                      </div>
+                      <!-- Row 4 -->
+                      <div class="row mt-4" *ngIf="ExpForm.controls['Type'].value && ExpForm.controls['Type'].value?.NetSuiteId > 0">
+                        <div class="col-sm-2 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Independent Hours</mat-label>
+                            <input matInput type="number" formControlName="IndependentHours"
+                              (change)="CalculateHours()">
+                              <mat-error *ngIf="!ExpForm.controls['IndependentHours'].valid && ExpForm.controls['IndependentHours'].touched">
+                                Independent Hours are required.
+                              </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div class="col-sm-2 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Supervised Hours</mat-label>
+                            <input matInput type="number" formControlName="SupervisedHours" (change)="CalculateHours()">
+                            <mat-error *ngIf="!ExpForm.controls['SupervisedHours'].valid && ExpForm.controls['SupervisedHours'].touched">
+                              {{ SupervisedHoursError }}
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+
+                        <div class="col-sm-2 ml-3 mr-3">
+                          <mat-form-field>
+                            <mat-label>Total Hours</mat-label>
+                            <input matInput readonly formControlName="TotalHours">
+                            <mat-error *ngIf="!ExpForm.controls['TotalHours'].valid && ExpForm.controls['TotalHours'].touched">
+                              Total hours must be 20 or more for any experience entry.
+                            </mat-error>
+                          </mat-form-field>
+
+                        </div>
+                        <!-- Hiding Modified Total Hours at Molli's request field still needs to be submitted though -->
+                        <div class="col-sm-2 ml-3 mr-3" *ngIf="1==0">
+                          <mat-form-field>
+                            <mat-label>Modified Total Hours</mat-label>
+                            <input matInput readonly formControlName="CalculatedHours">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <!-- Supervision component goes here -->
+                      <div *ngIf="RepresentationType.Id">
+                        <experience-supervision [ExpRepresentationType]="RepresentationType" [ExpSubmittedExpId]="SubmittedExpId"
+                        [ExpSupervisionArray]="SupervisionArray"
+                        (SupervisionArrayEmitter)="SetSupervisionArrayFromForm($event)"></experience-supervision>
+                      </div>
+                      <!-- Row 5 -->
+                      <!-- <div class="row mt-3 mb-3">
+                        <div class="col-sm-6 ml-3 mr-3">
+                          <label>Final Experience Verification Form (F-EVF)</label>
+                          <app-file-upload formControlName="EvfFile" [Progress]="UploadProgress"
+                            (FileEvent)="File_Event($event)" (InstFile)="InstFile"></app-file-upload>
+                        </div>
+                      </div> -->
+                      <!-- Row 6 -->
+                      <div class="row mt-4 px-3 pb-4">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button mat-raised-button color = "primary" class="btn-primary mr-4" (click)="OnClickCancel()">Cancel </button>
+                            <button mat-raised-button color = "primary" class="btn-primary" type="submit" (click)="OnSubmit()">Save </button>
+                        </div>
+                    </div>
+                    </form>
+                  </div> <!-- end inner panel body -->
+                </ng-template>
+
+            </div> <!-- end Outer Panel Body (do we need this?) -->
+        </div> <!-- end col width definition -->
+    </div> <!-- end edit experience -->
+</div>
+

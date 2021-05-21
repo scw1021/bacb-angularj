@@ -1,0 +1,193 @@
+<div class="container">
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Personal Information - {{ Czech(1) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <personal-inf [summaryLock] = "true"></personal-inf>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Information Release - {{ Czech(2) | async  }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <app-attestations-summary SectionId="1"></app-attestations-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Professional Information - {{ Czech(3) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <professional-info-summary
+        (PageChange)="OnPageChange($event)" [PageChangeEmission]='-7' [CanEdit]="CanEditSummary"></professional-info-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Other non-BACB Credentials - {{ Czech(4) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <other-credentials-summary  (PageChange)="OnPageChange($event)"
+       [PageChangeEmission]='-6' [CanEdit]="CanEditSummary"></other-credentials-summary>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Education Summary - {{ Czech(5) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <education-summary (PageChange)="OnPageChange($event)"
+      [PageChangeEmission]='-5' [CanEdit]="CanEditSummary"></education-summary>
+  </mat-expansion-panel>
+  <div *ngIf="AppType == '1'">
+    <mat-expansion-panel [expanded]="false" class="mt-1" >
+      <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+        <mat-panel-title>
+          <h5 class="summary-header">
+            Coursework Summary - {{ Czech(6) | async }}
+          </h5>
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <app-courseworking [CanEdit]="false"></app-courseworking>
+    </mat-expansion-panel>
+  </div>
+
+  <div *ngIf="AppType== '2'">
+    <mat-expansion-panel [expanded]="false" class="mt-1" >
+      <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+        <mat-panel-title>
+          <h5 class="summary-header">
+            Research Experience Summary - {{ Czech(10) | async  }}
+          </h5>
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <app-large-file-upload-summary [FileTypes]="ResearchExperienceFileTypes" ></app-large-file-upload-summary>
+    </mat-expansion-panel>
+  </div>
+
+  <div *ngIf="AppType== '3'">
+    <mat-expansion-panel [expanded]="false" class="mt-1" >
+      <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+        <mat-panel-title>
+          <h5 class="summary-header">
+            Post-Doctoral Experience Summary - {{ Czech(11) | async }}
+          </h5>
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <app-large-file-upload-summary [FileTypes]="PostDocExperienceFileTypes" ></app-large-file-upload-summary>
+    </mat-expansion-panel>
+  </div>
+
+  <div *ngIf="CertType== '1'">
+    <mat-expansion-panel [expanded]="false" class="mt-1" >
+      <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+        <mat-panel-title>
+          <h5 class="summary-header">
+            Experience Summary - {{ Czech(7) | async }}
+          </h5>
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <experience-summary  [CanEdit]="false"></experience-summary>
+    </mat-expansion-panel>
+  </div>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Attestations - {{ Czech(8) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <app-attestations-summary SectionId="2"></app-attestations-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Terms and Conditions - {{ Czech(9) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <app-attestations-summary SectionId="3"></app-attestations-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="false" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Accommondations - {{ Czech(12) | async }}
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <div class="bacb-panel-bg">
+      <app-accommodation-summary></app-accommodation-summary>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="CanEditSummary" [expanded]="true" class="mt-1" >
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header summary-opt">
+      <mat-panel-title>
+        <h5 class="summary-header">
+          Submit Application
+        </h5>
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <p>By clicking submit you have found all information in this application to be true to the extent of your knowledge
+      and have made no fabrications or falsehoods.</p>
+    <p>The information included in this application will be available in future applications, but upon submission, your
+      Education, Coursework, and Other Non-BACB Credentials will be permanently linked to your account through this
+      application and may not be removed or altered.</p>
+    <p>After clicking `Submit` you will be directed to the payment page.</p>
+    <div *ngIf="(IssueWithSubmission$ | async) as Issue" class="col-12 align-right">
+      <button matTooltipClass="bacb-tooltip" [matTooltip]="Issue != 'T' ? Issue : null" mat-raised-button color = "primary" class="btn-primary" (click)="OnClickSubmit()">
+        <!-- <mat-icon>hand-middle-finger</mat-icon> -->
+        <mat-icon>check</mat-icon>Submit
+      </button>
+    </div>
+
+  </mat-expansion-panel>
+
+</div>

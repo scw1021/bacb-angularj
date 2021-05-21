@@ -1,0 +1,35 @@
+<div class="splash-animation col-12 alert-main">
+  <div *ngIf="Alert.Response" class="alert-message">
+    <div *ngIf="Alert.Message == ''; else ShowMessage"></div>
+    <div #ShowMessage *ngIf="IsAlert then AlertMessage; else ConfirmationAlert"></div>
+    <div #ConfirmationAlert *ngIf="(IsError && !IsAlert) then Error; else Confirm"></div>
+    <ng-template #Confirm>
+     <!-- This is being commented out for dev -->
+      <div class="col-12">
+        <div class="alert-confirm-message">
+          <!-- Confirmation: {{ Alert.Message }} -->
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #Error>
+<!--
+      <div class="col-4">
+        <div class="alert alert-danger" role = "alert">
+          Error: {{ Alert.Message }}
+        </div>
+      </div> -->
+
+
+    </ng-template>
+    <ng-template #AlertMessage>
+      <div class="col-12">
+        <div class="alert-other-message">
+          {{Alert.Message}}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="col-12" *ngIf="IsLoading">
+  <loading></loading>
+</div>

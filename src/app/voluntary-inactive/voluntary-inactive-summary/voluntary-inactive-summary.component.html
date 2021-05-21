@@ -1,0 +1,27 @@
+<div class="container-fluid table-responsive mt-2">
+  <mat-table #table [dataSource]="SummaryElements | async" class="table table-striped">
+    <mat-header-row *matHeaderRowDef="DisplayColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; let even = even; columns: DisplayColumns;"></mat-row>
+    <ng-container matColumnDef="Status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.Status?.ExternalName }}</mat-cell>
+      <mat-footer-cell *matFooterCellDef><b>Total:</b></mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="Start Date">
+      <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.StartDate | date }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="End Date">
+      <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.EndDate | date }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Reason">
+      <mat-header-cell *matHeaderCellDef>Reason</mat-header-cell>
+      <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.Reason }}</mat-cell>
+    </ng-container>
+  </mat-table>
+  <!-- <div class="instructions debugging">Certification Renewal Qualification:
+    {{ (ApplicationQualifications$ | async).QualifiedForBCBARenewal }}</div>
+  <div class="instructions debugging">Certification Past Cert Qualification:
+    {{ (ApplicationQualifications$ | async).QualifiedForBCBAExamViaPastCert }}</div> -->
+</div>

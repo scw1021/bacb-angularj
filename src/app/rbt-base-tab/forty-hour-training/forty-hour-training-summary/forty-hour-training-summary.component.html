@@ -1,0 +1,32 @@
+<div class="instructions mt-4">Supporting Document Uploaded</div>
+<app-large-file-upload-summary  [AppId]="_AppId" [FileTypes]="FileTypes"></app-large-file-upload-summary>
+<app-attestations-summary SectionId="4"></app-attestations-summary>
+<div class="instructions mt-4">Information Provided on Training Supervisor</div>
+<div *ngIf="Relationship$ | async as relationship">
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> Start Date </label> <br>
+      {{ relationship.StartDate }}
+    </div>
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> End Date </label> <br>
+      {{ relationship.EndDate }}
+    </div>
+  </div>
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> BACBID </label> <br>
+      {{ relationship.Customer.BACBID }}
+    </div>
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> Responsible Trainer </label> <br>
+      {{ relationship.Customer.Name }}
+    </div>
+  </div>
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-8 pl-3 pr-3">
+      <label> Agency </label> <br>
+      {{ relationship.Agency }}
+    </div>
+  </div>
+</div>

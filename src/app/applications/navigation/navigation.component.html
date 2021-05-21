@@ -1,0 +1,13 @@
+<div class="row mt-3">
+  <div class="btn-group col-12 text-center" role="group">
+    <button *ngIf="!IsFirst" mat-raised-button color = "primary" class="btn-primary" (click)="OnClickBack()">
+      <mat-icon inline="true">arrow_back</mat-icon>
+      Back
+    </button>
+    <div class="col-10"></div>
+    <button *ngIf="!IsLast" mat-raised-button color = "primary" class="btn-primary" (click)="OnClickForward()">
+      Forward
+      <mat-icon inline="true">arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>

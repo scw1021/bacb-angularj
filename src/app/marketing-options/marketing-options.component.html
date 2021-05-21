@@ -1,0 +1,59 @@
+<div class="bacb-content container mb-5">
+  <h3 class = "panel-heading bacb-panel-header text-center mb-1">BACB Subscription Categories</h3>
+    <div class = "panel panel-default bacb-panel-bg"
+      style = "padding: 2%;">
+      <p class = "panel-body">It is the intention of the BACB to provide you with access to important information regarding training, educational, employment, and research opportunities.
+        To achieve this goal, an email transmission service is available to organizations that wish to provide information to BACB certificants.
+        Your email address is kept confidential and is not provided to the organization requesting the transmission.
+        In an effort to ensure you receive only transmissions that are of interest to you, you may use the options below to indicate the types of information you want to receive.
+      </p>
+      <div class = "d-flex flex-column justify-content-center" >
+        <div *ngFor = "
+        let optn of MarketingOptionandIsOptedInTupleArr;
+        let ngForIndex = index;
+        let last = last;
+        let odd = odd" >
+         <!-- Below: displays checkbox ngForIndex and checkbox ngForIndex+1 for every iteration where ngForIndex is even and not last(to avoid array pointer error)
+              The reason all this logic is implemented: It's dynamic. ANY change to the number of marketing options will output two item rows, with the remainder at the bottom(or none if N is even)-->
+          <div class = "row"  *ngIf ="!last && !odd; else lastItem;">
+              <div class = "col-6">
+                <mat-checkbox color = "primary"  [(ngModel)] = "MarketingOptionandIsOptedInTupleArr[ngForIndex][1]"></mat-checkbox>
+                {{MarketingOptionandIsOptedInTupleArr[ngForIndex][0]['Value']}}
+              </div>
+              <div class = "col-6">
+                <mat-checkbox color = "primary"  [(ngModel)] = "MarketingOptionandIsOptedInTupleArr[ngForIndex+1][1]"></mat-checkbox>
+                {{MarketingOptionandIsOptedInTupleArr[ngForIndex+1][0]['Value']}}
+              </div>
+          </div>
+          <ng-template #lastItem>
+            <div *ngIf = "last && !odd">
+              <mat-checkbox color = "primary"   [(ngModel)] = "MarketingOptionandIsOptedInTupleArr[ngForIndex][1]" class = "text-center" ></mat-checkbox>
+              {{MarketingOptionandIsOptedInTupleArr[ngForIndex][0]['Value']}}
+            </div>
+          </ng-template>
+        </div>
+
+
+      </div>
+      <!-- opt message -->
+      <div style = "text-align: center" class = "justify-content-center">
+        <div style="margin-bottom: 2%; width: 33%; display: inline-block">
+          <em class = "text-center">You may opt out at any time in the future.</em>
+        </div>
+      </div>
+      <!-- Submit and cancel butttons -->
+      
+        <div class="col-12 d-flex flex-column">
+          <div class="col-12 d-flex justify-content-center">
+          <button mat-raised-button color = "primary" class="btn-primary col-1" type="button" (click) = "SaveMarketingOptionsToBackend()">
+            Save
+          </button>
+        </div>
+          <div class="col-12 d-flex justify-content-center">
+          <p *ngIf ="showSuccess">Your options have been saved</p>
+        </div>
+        
+      </div>
+    
+    </div>
+</div>

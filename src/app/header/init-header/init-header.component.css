@@ -1,0 +1,26 @@
+a.text-link:link {
+  color: #3366FF;
+  text-decoration: underline;
+}
+a.text-link:visited {
+  color: #660066;
+}
+a.text-link:active {
+  color: #3366FF;
+  text-decoration: none;
+}
+a.text-link:hover {
+  color: #006699;
+  text-decoration: underline;
+}
+
+.login-row {
+  justify-content: center;
+}
+
+.text-row {
+  display:inline-block;
+  text-align: center;
+  justify-content: center;
+}
+

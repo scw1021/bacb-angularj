@@ -1,0 +1,25 @@
+<!-- personal/professional information -->
+<div class="dropdown-divider"></div>
+<div class="row mt-4">
+  <div class="col-sm-12">
+    <div class="panel panel-body panel-default padded-summary-element">
+      <div class="row mt-1 mb-4">
+        <div class="col-sm-10">
+          <label class="mb-2"> Primary Role in Behavior Analysis </label> <br>
+          {{ PrimaryRoleInBA }}<br>
+          <label class="mt-4 mb-2"> Primary Area of Professional Emphasis </label> <br>
+          {{ PrimaryAreaOfProfessionalEmphasis }}<br>
+          <label class="mt-4 mb-2"> Ages of Clientele </label> <br>
+          {{ DisplayAgesOfClientele }}<br>
+          <label class="mt-4 mb-2"> Secondary Area of Professional Emphasis </label> <br>
+          {{ SecondaryAreaOfProfessionalEmphasis }}<br>
+        </div>
+        <div *ngIf="CanEdit" class="col-sm-2">
+          <button mat-raised-button color = "primary" class="btn-primary" (click)="this.OnClickEdit()">
+            <mat-icon inline="true">edit</mat-icon> Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

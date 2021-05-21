@@ -1,0 +1,403 @@
+<app-header></app-header>
+<div class="bacb-content container ">
+  <div class="col-sm-12">
+    <div class="d-flex center-object">
+      <h1 class="page-title">Supervision Management</h1>
+    </div>
+  </div>
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label> Supervisors </ng-template>
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <div class="panel panel-default bacb-panel-bg">
+            <legend class="panel-heading bacb-panel-header">
+              <div class="small-container align-middle">
+                <div class="bacb-panel-header-text">Current Supervisors</div>
+                <div class="fill"></div>
+              </div>
+            </legend>
+            <table mat-table [dataSource]="currentSupervisorsData$ | async" class=" table table-striped">
+              <tr mat-header-row *matHeaderRowDef="allCols"></tr>
+              <tr mat-row *matRowDef="let row; columns: allCols"></tr>
+
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.Name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="BACB ID">
+                <th mat-header-cell *matHeaderCellDef>BACB ID</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.BACBID }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Certification Type">
+                <th mat-header-cell *matHeaderCellDef>Certification Type</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.CertificationType }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.Status }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Date Added">
+                <th mat-header-cell *matHeaderCellDef>Date Added</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.StartDate | date: "short" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  <button type="button" class="btn btn-link border" (click)="onClickRemoveSupervisor(Supervision)">
+                    <mat-icon class="bacb-icon">delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Previous supervisors -->
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <div class="panel panel-default bacb-panel-bg">
+            <legend class="panel-heading bacb-panel-header">
+              <div class="small-container align-middle">
+                <div class="bacb-panel-header-text">Previous Supervisors</div>
+                <div class="fill"></div>
+              </div>
+            </legend>
+            <table mat-table [dataSource]="previousSupervisorsData$ | async" class="table table-striped">
+              <tr mat-header-row *matHeaderRowDef="noActionColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: noActionColumns"></tr>
+
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.Name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="BACB ID">
+                <th mat-header-cell *matHeaderCellDef>BACB ID</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.BACBID }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Certification Type">
+                <th mat-header-cell *matHeaderCellDef>Certification Type</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.CertificationType }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.Status }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Date Added">
+                <th mat-header-cell *matHeaderCellDef>Date Added</th>
+                <td mat-cell *matCellDef="let Supervision">
+                  {{ Supervision.StartDate | date: "short" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let Supervision">
+
+                </td>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- End supervisors -->
+    <!-- Begin supervisees -->
+    <mat-tab *ngIf = "highestLevelCert?.Type?.Abbrev !== 'RBT'">
+      <ng-template mat-tab-label> Supervisees </ng-template>
+      <div *ngIf="!showAddSupervisee">
+        <div class="row mt-4">
+          <div class="col-sm-12">
+            <div class="panel panel-default bacb-panel-bg">
+              <legend class="panel-heading bacb-panel-header">
+                <div class="small-container d-flex justify-content-between">
+                  <div class="bacb-panel-header-text">Current Supervisees</div>
+
+                  <button mat-raised-button (click)="onClickAddSupervisee()">Add</button>
+
+                </div>
+              </legend>
+              <table mat-table [dataSource]="currentSuperviseesData$ | async" class="table table-striped">
+                <tr mat-header-row *matHeaderRowDef="allCols"></tr>
+                <tr mat-row *matRowDef="let row; columns: allCols"></tr>
+
+                <ng-container matColumnDef="Name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.Name }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="BACB ID">
+                  <th mat-header-cell *matHeaderCellDef>BACB ID</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.BACBID }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Certification Type">
+                  <th mat-header-cell *matHeaderCellDef>Certification Type</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.CertificationType }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.Status }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Date Added">
+                  <th mat-header-cell *matHeaderCellDef>Date Added</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.StartDate | date: "short" }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    <button type="button" class="btn btn-link border" (click)="onClickRemoveSupervisee(Supervision)">
+                      <mat-icon class="bacb-icon">delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Previous supervisees -->
+        <div class="row mt-4">
+          <div class="col-sm-12">
+            <div class="panel panel-default bacb-panel-bg">
+              <legend class="panel-heading bacb-panel-header">
+                <div class="small-container align-middle">
+                  <div class="bacb-panel-header-text">Previous Supervisees</div>
+                  <div class="fill"></div>
+                </div>
+              </legend>
+              <table mat-table [dataSource]="previousSuperviseesData$ | async" class="table table-striped">
+                <tr mat-header-row *matHeaderRowDef="noActionColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: noActionColumns"></tr>
+
+                <ng-container matColumnDef="Name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.Name }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="BACB ID">
+                  <th mat-header-cell *matHeaderCellDef>BACB ID</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.BACBID }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Certification Type">
+                  <th mat-header-cell *matHeaderCellDef>Certification Type</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.CertificationType }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.Status }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Date Added">
+                  <th mat-header-cell *matHeaderCellDef>Date Added</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                    {{ Supervision.StartDate | date: "short" }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let Supervision">
+                  </td>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="panel-default" *ngIf="showRemoveSupervisee" #showAddSuperviseeForm
+        [formGroup]="removeSuperviseeForm">
+        <div class="row mt-4 panel-body">
+          <div class="col-12">
+            <div class="panel panel-default bacb-panel-bg">
+
+            <legend class="panel-heading bacb-panel-header">
+              <div class="small-container align-middle">
+                <div class="bacb-panel-header-text">Remove Supervisee</div>
+              </div>
+            </legend>
+            <div class="row">
+            <div class="col-4 text-center" style="vertical-align: middle;">
+              <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput type="text" [matDatepicker]="endDatePicker" formControlName="EndDate">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+                <mat-error
+                  *ngIf="!this.removeSuperviseeForm.get('EndDate').valid && this.removeSuperviseeForm.get('EndDate').touched">
+                  The End Date is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-4 text-center" style="vertical-align: middle;">
+              <mat-form-field>
+                <mat-label>Reason to remove</mat-label>
+                <mat-select formControlName="Reason">
+                  <mat-option *ngFor="let removalReason of reasonsForRemovingSupervisee | async"
+                    [value]="removalReason.Id">
+                    {{removalReason.Value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div *ngIf=  "this.removeSuperviseeForm.get('Reason').value == '100000003'"
+            class="col-4 text-center">
+              <mat-form-field >
+                <mat-label>Other reason to remove</mat-label>
+                <input matInput type="text" formControlName="OtherReason">
+              </mat-form-field>
+              <mat-error
+                  *ngIf="this.removeSuperviseeForm.getError('missingOtherReasonText')">
+                  Please enter the reason for removing this supervisee
+                </mat-error>
+            </div>
+          </div>
+            <div class="d-flex justify-content-between col-12" style="padding-bottom: 1.5em;">
+              <button mat-raised-button color = "primary"(click) = "onClickConfirmRemoveSupervisee()" [disabled] = "!removeSuperviseeForm.valid">Confirm Deletion</button>
+              <button mat-raised-button color = "primary"(click) = "onClickCancelRemoveSupervisee()" >Cancel Deletion</button>
+            </div>
+          </div>
+          </div>
+
+
+
+        </div>
+      </form>
+      <!-- Add Supervisee Form -->
+      <form class="panel-default" *ngIf="showAddSupervisee" #showAddSuperviseeForm [formGroup]="addSuperviseeForm">
+        <div class="row mt-4 panel-body">
+          <div class="col-12">
+            <div class="panel panel-default bacb-panel-bg">
+              <legend class="panel-heading bacb-panel-header">
+                <div class="small-container align-middle">
+                  <div class="bacb-panel-header-text">Add Supervisee</div>
+                </div>
+              </legend>
+
+              <div class="row">
+                <div class="col-3 text-center">
+
+                  <mat-form-field>
+                    <mat-label>BACB ID</mat-label>
+                    <input matInput type="text" formControlName="SuperviseeBacbId">
+                  </mat-form-field>
+                  <mat-error *ngIf="this.addSuperviseeForm.get('SuperviseeBacbId').hasError('ContainsLetters')">
+                    No letters allowed.
+                  </mat-error>
+                  <mat-error *ngIf="this.addSuperviseeForm.get('SuperviseeBacbId').hasError('underSevenDigits')">
+                    Not enough digits.
+                  </mat-error>
+                  <mat-error *ngIf="this.addSuperviseeForm.get('SuperviseeBacbId').hasError('overSevenDigits')">
+                    Too many digits.
+                  </mat-error>
+                  <mat-error *ngIf="this.addSuperviseeForm.get('SuperviseeBacbId').hasError('overSevenDigits') ||
+                  this.addSuperviseeForm.get('SuperviseeBacbId').hasError('underSevenDigits') ||
+                  this.addSuperviseeForm.get('SuperviseeBacbId').hasError('ContainsLetters')">
+                    Please enter the seven numbers of your supervisor's BACB ID
+                  </mat-error>
+
+
+                </div>
+                <div class="col-3 text-center" style="vertical-align: middle;">
+                  <mat-form-field>
+                    <mat-label>Supervisee Certification</mat-label>
+                    <mat-select formControlName="SuperviseeCertTypeId">
+                      <mat-option *ngFor="let type of certTypes | async" [value]="type.Id">
+                        {{type.Abbrev}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-3 text-center" style="vertical-align: middle;">
+                  <button mat-raised-button type="button"
+                    [disabled]="!addSuperviseeForm.get('SuperviseeBacbId').valid || !addSuperviseeForm.get('SuperviseeCertTypeId').valid"
+                    (click)="onClickVerify()">Find Supervisee</button>
+                </div>
+                <div class="col-3 text-center">
+                  <mat-form-field>
+                    <mat-label>Supervisee Name</mat-label>
+                    <input matInput type="text" formControlName="SuperviseeName">
+                  </mat-form-field>
+                </div>
+                <div class="col-6 text-center">
+                  <mat-form-field>
+                    <mat-label>Start Date</mat-label>
+                    <input matInput type="text" [matDatepicker]="SuperviseeStartDatePicker" formControlName="StartDate">
+                    <mat-datepicker-toggle matSuffix [for]="SuperviseeStartDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #SuperviseeStartDatePicker></mat-datepicker>
+                    <mat-error
+                      *ngIf="!this.addSuperviseeForm.get('StartDate').valid && this.addSuperviseeForm.get('StartDate').touched">
+                      The Start Date is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+            <div class="d-flex justify-content-between">
+              <button mat-raised-button color="primary" (click)="onClickCancelAddSupervisee()" class = "padbtn">Cancel</button>
+              <button mat-raised-button color="primary" (click)="onSubmitAddSupervisee()" class = "padbtn"
+                [disabled]="!addSuperviseeForm.valid">Save Supervisee</button>
+            </div>
+          </div>
+          </div>
+
+        </div>
+
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+  <!-- <app-supervisor-eligibility></app-supervisor-eligibility> -->
+  <div>
+    <button mat-raised-button color= "primary" (click)= "_devShowTesterTools()">Helpful information for testers</button>
+    <div *ngIf = "_devShowTestInfo">
+      To add supervisees, you need to know their BACBID and cert level. Here are some example users that you can use to test.
+      <div>
+        <h3>Matty Ice</h3>
+        <h6>BACBID - 	0300021</h6>
+        <h6>Certs - 	RBT, BCaBA, BCBA</h6>
+      </div>
+      <h3>Matt Messer</h3>
+      <h6>BACBID - 	0300027</h6>
+      <h6>Certs - RBT</h6>
+
+      <h3>Mattieur Messier</h3>
+      <h6>BACBID - 	0300001</h6>
+      <h6>Certs - BCaBA</h6>
+    </div>
+  </div>
+</div>
+<div *ngIf="false">
+  <input formControlName="SuperviseeContactId">
+  <input formControlName="SuperviseeCertId">
+  <input formControlName="SupervisionId">
+</div>
+

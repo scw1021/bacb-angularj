@@ -1,0 +1,14 @@
+.progressbar {
+  text-align: center;
+  background-color: cadetblue;
+}
+.progressbarboundary {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  width: 50%;
+
+}
+.center {
+  text-align: center;
+}

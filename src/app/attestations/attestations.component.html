@@ -1,0 +1,51 @@
+<bacb-panel [PanelTitle]=SectionTitle>
+  <div class="col-12">
+    <div *ngFor="let Attestation of Attestations | async">
+      <div class="container">
+
+        <div class="col-12" *ngIf="Attestation.Question.HTML">
+          <div class="mt-2 ml-3 mr-3 mb-2">
+            <div [innerHTML]="Attestation.Question.HTML | safe:'html'"></div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-10 mt-2 ml-3 mr-3 mb-2">
+            {{ Attestation.Question.Text }}
+          </div>
+        </div>
+        <!-- Answer -->
+        <div class="col-12">
+            <div class="mt-2 ml-3 mb-2" *ngIf="Attestation.Question.CanBeFalse =='T'; else Checkbox">
+              <div class="col-12">
+                <div class="col-2"></div>
+                <mat-form-field>
+                  <mat-select placeholder="Select"
+                  [formControl]="Attestation.FormControl"
+                  (selectionChange)="OnSelect($event, Attestation)"
+                  [value]="Attestation.Question.TrueOption">
+                    <mat-option value="T"> {{ Attestation.Question.TrueOption }}</mat-option>
+                    <mat-option value="F"> {{ Attestation.Question.FalseOption }}</mat-option>
+                  </mat-select>
+                  <!-- <mat-error>
+                    {{ GetErrorMessage() }}
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <ng-template #Checkbox>
+              <div class="row ml-4">
+                <mat-checkbox class="attestation-box  mt-1 ml-2"
+                (change)="OnCheck($event, Attestation)"
+                [checked]="Attestation.Answer?.Answer == 'T'"
+                ></mat-checkbox>
+                <div class="col-11">{{ Attestation.Question.TrueOption }}</div>
+              </div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="RequireFileUpload">
+      <app-large-file-upload [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)"></app-large-file-upload>
+    </div>
+  </div>
+</bacb-panel>

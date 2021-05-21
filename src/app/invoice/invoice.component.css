@@ -1,0 +1,23 @@
+
+.payment-header {
+  color: white;
+
+}
+
+.align-right {
+  text-align-last: right;
+}
+
+.icon {
+  place-content: flex-end;
+}
+
+.invoice-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+.center-object {
+  justify-content: center;
+  text-align: center;
+  text-align-last: center;
+}

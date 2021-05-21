@@ -1,0 +1,57 @@
+
+<div class="col-12">
+  <div class="panel panel-default bacb-panel-bg mt-2 mb-2">
+    <legend class="panel-heading bacb-panel-header">
+      <div class="small-container align-middle">
+        <div>Email change</div>
+      </div>
+    </legend>
+  </div>
+
+  <div  class = "container">
+    <div class = "row">
+      <div class = "col-md-6 col-12" style = "display: flex; justify-content: center;">
+        <mat-form-field [formGroup] = "newEmail" style = "margin: 5%">
+          <mat-label>Enter your new email</mat-label>
+          <input matInput type = "text" formControlName = "NewEmail">
+          <mat-error *ngIf= "newEmail.get('NewEmail').getError('required')">This is required</mat-error>
+          <mat-error *ngIf= "newEmail.get('NewEmail').getError('email')">Not a valid email address</mat-error>
+        </mat-form-field>
+      </div>
+      <div class = "col-md-6 col-12" style = "display: flex; justify-content: center;">
+        <button
+        style = "margin:5%;  max-height: 50px;"
+        (click) = "fireChangeRequest()"
+        [disabled] = "!this.newEmail.valid || requestSent"
+        mat-raised-button> Send Verification Code
+        </button>
+      </div>
+      <div *ngIf="requestSent" class = "col-md-6 col-12" [formGroup] = "verificationCode" style="display: flex; justify-content: center;">
+        <mat-form-field style = "margin:5%;">
+          <mat-label>Verification Code</mat-label>
+          <input matInput type = "text" formControlName = "VerificationCode">
+        </mat-form-field>
+      </div>
+      <div *ngIf="requestSent"
+      class = "col-md-6 col-12"
+      style="display: flex; justify-content: center;">
+      <button
+      style = "margin:5%;  max-height: 50px;"
+      (click) = "fireCodeVerification()"
+      [disabled] = "!requestSent"
+      mat-raised-button> Verify Code
+      </button>
+      <button
+      style = "margin:5%;  max-height: 50px;"
+      (click) = "resetAndTryAgain()"
+      [disabled] = "!requestSent"
+      mat-raised-button> Start over
+      </button>
+    </div>
+    <h6 class = "col-12" *ngIf = "requestSent && !emailChangedSuccessfully"> We've sent a verification code to your new email address. Please enter it below. If you made a mistake entering your email, try again to start over</h6>
+    <div class = "col-12 text-center" *ngIf = "emailChangedSuccessfully">
+      <h3> Your email has been changed successfully</h3>
+    </div>
+  </div>
+  </div>
+</div>

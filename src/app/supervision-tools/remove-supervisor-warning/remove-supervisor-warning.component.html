@@ -1,0 +1,9 @@
+<div class="container">
+    <h2 class="col-12">Warning: You are about to delete a supervisor</h2>
+    <p> If you delete your only active supervisor, your certification will be invalid</p>
+    <div class="d-flex justify-content-around">
+    <mat-checkbox [(ngModel)] = "heknowwhatitdo">I understand</mat-checkbox>
+    <button mat-raised-button [disabled] = "!heknowwhatitdo" color ="primary" (click) = "onClickYes()">Yes, I would like to delete this supervisor</button>
+    <button mat-raised-button color ="primary"  (click) = "onClickNo()">Cancel</button>
+</div> 
+</div>

@@ -1,0 +1,33 @@
+<div class="instructions mt-4">Supporting Document Uploaded</div>
+<app-large-file-upload-summary  [AppId]="_AppId" [FileTypes]="FileTypes"></app-large-file-upload-summary>
+<div class="instructions">
+  Competency Skills Assessed
+</div>
+<div class="panel-body padded-summary-element" *ngFor="let skill of SkillsAssessed | async">
+  <div>{{skill.Value}}</div>
+</div>
+<div class="instructions mt-4">Information Provided on Competency Assessor</div>
+<div *ngIf="Relationship$ | async as relationship">
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> Date Completed </label> <br>
+      {{ relationship.EndDate }}
+    </div>
+  </div>
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> BACBID </label> <br>
+      {{ relationship.Customer.BACBID }}
+    </div>
+    <div class="col-sm-5 pl-3 pr-3">
+      <label> Responsible Trainer </label> <br>
+      {{ relationship.Customer.Name }}
+    </div>
+  </div>
+  <div class="row mt-1 mb-4">
+    <div class="col-sm-8 pl-3 pr-3">
+      <label> Assessor Relationship </label> <br>
+      {{ relationship.SupervisorRelationship }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<app-header></app-header>
+<div class="bacb-content container mb-5">
+<div class = "panel panel-default bacb-panel-bg">
+
+  <h5>Id Card</h5>
+  <p>Below you will find your wallet card, which includes information related to your BACB
+    certification. We recommend that you keep this card handy for when you need easy
+    access to your certification information.</p>
+  <!-- <p style="background-color: gray;">{{currentCert$ | json}} </p> -->
+  <mat-card class ="business-card-dimensions">
+    <div class="card-header">
+      <img [src] = "imageString" class = "img-dimension">
+      <div class= "header-rows">
+        <div>Behavior Analyst Certification Board</div>
+        <div>Certification #: {{(currentCert$ | async).Number}}</div>
+        <div>Certification: {{(currentCert$ | async).Type.Abbrev}}</div>
+      </div>
+    </div>
+    <div class = "body-rows">
+      <div>Issued on: {{humanFriendlyIssuedOnDate}}</div>
+      <div>Valid To: {{humanFriendlyValidToDate}}</div>
+      <div>Certificant: {{(currentUser$ | async).FullName}}</div>
+    </div>
+  </mat-card>
+  <mat-card class ="business-card-dimensions" id = "back">
+    <div class = "card-footer">
+      <div style = "display: inline-flex; flex-direction: column;" class = "body-rows">
+          <p style="display: inline;">7950 Shaffer Parkway, Littleton, CO, 80127, USA</p>
+          <p style="display: inline;">www.bacb.com | 1-720-438-4321</p>
+      </div>
+    </div>
+  </mat-card>
+</div>
+</div>

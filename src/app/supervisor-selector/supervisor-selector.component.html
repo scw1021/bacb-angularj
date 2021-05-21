@@ -1,0 +1,20 @@
+<div [formGroup]="formGroup" class="row">
+  <div class="col-4">
+    <mat-form-field class="width-100">
+      <mat-label>BACB ID</mat-label>
+      <input matInput #bacbid formControlName="BACBID"  placeholder="0000000" maxlength="7" inputmode="numeric"/>
+      <mat-hint align="end">{{ bacbid.value?.length  || 0 }}/7</mat-hint>
+    </mat-form-field>
+    <mat-error *ngIf = "formGroup.get('BACBID').touched && !formGroup.get('BACBID').valid">BACB ID is required</mat-error>
+    <mat-error *ngIf = "NumbersOnlyError.Value">BACB ID must be seven digits. Please include any leading zeroes.</mat-error>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="width-100">
+      <mat-label>Name</mat-label>
+      <input matInput readonly formControlName="Name"/>
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <button [disabled]="!formGroup.controls['Name'].value" (click)=AddSupervisor()>Add Supervisor</button>
+  </div>
+</div>

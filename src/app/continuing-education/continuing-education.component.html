@@ -1,0 +1,117 @@
+<app-header></app-header>
+<div class=" bacb-content container mt-4 col-lg-10">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex center-object">
+        <h1 class="page-title">Continuing Education</h1>
+      </div>
+    </div>
+  </div>
+  <app-cert-cycle-summary class="mb-4"></app-cert-cycle-summary>
+  <div class="row mt-2">
+    <div class="col-12">
+      <div class="panel panel-default bacb-panel-bg">
+        <legend class="panel-heading bacb-panel-header pl-3 pr-3">Current Continuing Education Credit Summary</legend>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-12">
+              <continuing-education-summary class="mb-4"></continuing-education-summary>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <div class="panel panel-default bacb-panel-bg mt-4">
+        <legend class="panel-heading bacb-panel-header pl-3 pr-3">Continuing Education Submissions</legend>
+        <div class="col-lg-12">
+          <button mat-raised-button color = "primary" (click)="OnClickNew()">
+            <mat-icon inline="true">add_box</mat-icon>&nbsp; Add Continuing Education
+          </button>
+        </div>
+        <div *ngIf="AddingNewEducation" class="panel-body">
+          <div class="row mt-3 px-3">
+            <form class="col-12">
+              <mat-form-field>
+                <mat-label>Submission Type</mat-label>
+                <mat-select (selectionChange)="OnSelectCEType($event.value)">
+                  <mat-option *ngFor="let ceType of ContinuingEducationTypes" [value]="ceType"> {{ceType.Value}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+            <div class="col-12">
+              <div *ngIf="AddLearningEvent">
+                <app-learning-event-form (ClearEvent)="ClearEvent($event)"></app-learning-event-form>
+              </div>
+              <div *ngIf="AddLearningCoursework">
+                <app-learning-coursework-form (ClearEvent)="ClearEvent($event)"></app-learning-coursework-form>
+              </div>
+              <div *ngIf="AddLearningBACB">
+                <app-learning-bacbform (ClearEvent)="ClearEvent($event)"></app-learning-bacbform>
+              </div>
+              <div *ngIf="AddTeachingCoursework">
+                <app-teaching-coursework-form (ClearEvent)="ClearEvent($event)"></app-teaching-coursework-form>
+              </div>
+              <div *ngIf="AddTeachingAce">
+                <app-teaching-ace-form (ClearEvent)="ClearEvent($event)"></app-teaching-ace-form>
+              </div>
+              <div *ngIf="AddScholarshipPublication">
+                <app-scholarship-publication-form (ClearEvent)="ClearEvent($event)"></app-scholarship-publication-form>
+              </div>
+              <div *ngIf="AddScholarshipReview">
+                <app-scholarship-review-form (ClearEvent)="ClearEvent($event)"></app-scholarship-review-form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body ">
+          <div class="row">
+            <div class="col-12">
+              <div class="container-fluid table-responsive mt-2 ">
+                <mat-table #table [dataSource]="ContinuingEducationResults | async" class="table table-striped">
+                  <mat-header-row *matHeaderRowDef="DisplayColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; let even = even; columns: DisplayColumns;"></mat-row>
+                  <ng-container matColumnDef="Continuing Education Type">
+                    <mat-header-cell *matHeaderCellDef>Continuing Education Type</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.Type?.Value }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Description">
+                    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.Title }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Provider">
+                    <mat-header-cell *matHeaderCellDef>Provider</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.Provider }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Start Date">
+                    <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.getNetSuiteDate(Result.StartDate) }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Completion Date">
+                    <mat-header-cell *matHeaderCellDef>Completion Date</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.getNetSuiteDate(Result.CompletionDate) }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="General Credits">
+                    <mat-header-cell *matHeaderCellDef>General Credits</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.GeneralUnits }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Ethics Credits">
+                    <mat-header-cell *matHeaderCellDef>Ethics Credits</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.EthicsUnits }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Supervision Credits">
+                    <mat-header-cell *matHeaderCellDef>Supervision Credits</mat-header-cell>
+                    <mat-cell *matCellDef="let Result">{{ Result.SupervisionUnits }}</mat-cell>
+                  </ng-container>
+                </mat-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer class="footer-fixed"></app-footer>

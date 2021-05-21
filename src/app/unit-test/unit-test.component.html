@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class='bacb-content container mt-4 col-lg-10'>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex center-object">
+        <h1 class="page-title">Big Rob's Country-Style Test Suite</h1>
+      </div>
+    </div>
+    <div class="col-6">
+      <div [class]="TotalNumberOfTests === TotalPassedTests ? 'confirmation rate' : 'error rate'">
+      Tests Passed: {{ TotalPassedTests }} / {{ TotalNumberOfTests }}</div>
+    </div>
+  </div>
+
+  <div class="mt-4" *ngFor="let TestSet of UnitTestSets">
+    <div class="row">
+      <div class="SetHeader col-4">{{TestSet.Header}}</div>
+      <div class="description col-8">{{TestSet.Description}}</div>
+    </div>
+    <div *ngFor="let Test of TestSet.Tests">
+      <div class="unitTest py-2">
+        <div class="row col-12">
+          <div class="testText col-4">{{ TestSet.Script }}: {{ Test.Parameter }}</div>
+          <div [class]="Test.Passed ? 'confirmation col-6' : 'error col-6'" >
+            {{ Test.Passed === true ? 'TEST PASSED' : Test.Passed === false ? 'TEST FAILED' :  DefaultTestText }}
+          </div>
+          <div class="col-2">
+            <button (click)="ShowHide(Test)">Results</button>
+          </div>
+        </div>
+        <div *ngIf="Test.ViewResult" class="row col-12">
+          <div class="col-11"> {{ Test.TestResponse }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4" *ngFor="let TestSet of RecordSetTests">
+    <div class="row">
+      <div class="SetHeader col-4">{{TestSet.Header}}</div>
+      <div class="description col-8">{{TestSet.Description}}</div>
+    </div>
+    <div *ngFor="let Test of TestSet.Tests">
+      <div class="unitTest py-2">
+        <div class="row col-12">
+          <div class="testText col-4">customrecord_{{ Test.Record }}</div>
+          <div [class]="Test.Passed ? 'confirmation col-6' : 'error col-6'" > {{ Test.Passed === true ? 'TEST PASSED' : Test.Passed === false ? 'TEST FAILED' :  DefaultTestText }}</div>
+          <div class="col-2">
+            <button (click)="ShowHide(Test)">Results</button>
+          </div>
+        </div>
+        <div *ngIf="Test.ViewResult" class="col-12">
+          <div class="col-11"> Expected: {{ Test.Result }}</div>
+          <div class="col-11"> Received: {{ Test.Received }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+<app-footer class="footer-fixed"></app-footer>

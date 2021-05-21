@@ -1,0 +1,81 @@
+<loading></loading>
+<nav class="bacb-nav-header sticky container col-12 header navbar navbar-expand-lg navbar-light bacb-header">
+  <div class="col-2">
+      <img [src]="BacbLogoUrl" class="logo-size header-logo" (click)="OnClickNavigate('home')"/>
+  </div>
+  <div class="col-md-10 col-12 navigation-bar">
+    <div class="navigation-icon">
+      <button ngbDropdown class="navbar-toggler navigation-icon" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span ngbDropdownToggle class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="col-12 align-right navbar-nav ml-auto collapse navbar-collapse" id="navbarSupportedContent">
+      <div *ngIf="IsCertificationHolder$">
+        <li ngbDropdown class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+            aria-haspopup="true" aria-expanded="false">
+            Maintenance
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('continuing-education')">Continuing
+            Education</a>
+            <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('voluntary-inactive')">Voluntary Inactive</a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item dropdown dropdown-center">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+            aria-haspopup="true" aria-expanded="false">
+            Training
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <!-- <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('supervision')">Supervisor</a>
+            <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('supervision-eligibility')">Supervision Eligibility</a> -->
+          </div>
+        </li>
+
+      </div>
+      <li ngbDropdown class="nav-item navbar-link dropdown-center">
+        <a  class="nav-link" id="navbarLink" role="button" (click)="OnClickNavigate('application-home')">
+          Applications
+        </a>
+      </li>
+      <li ngbDropdown class="nav-item dropdown">
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+          aria-haspopup="true" aria-expanded="false">
+          My Account
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('home')">Account Portal</a>
+          <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('profile-edit')">Profile Settings</a>
+          <!-- <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('file-upload')">Upload File</a> -->
+          <!-- <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('reset')">Update Password</a> -->
+          <!-- <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('name-change')">Request Name Change</a> -->
+          <a ngbDropdownItem class="dropdown-item" href="https://courses.bacb.com">Courses management tool</a>
+          <a  ngbDropdownItem class="dropdown-item" routerLink = "/journal">Resources(restrict before launch)</a>
+          <a *ngIf = "IsBcbaBcabaOrBcbad == true" ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('id-card')">Id Card</a>
+          <!-- <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('marketing-options')">Manage Email Subscriptions</a> -->
+          <div class="dropdown-divider"></div>
+          <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('payment')">Payment</a>
+          <a ngbDropdownItem class="dropdown-item" (click)="OnClickLogout()">Logout</a>
+        </div>
+      </li>
+      <!-- <li ngbDropdown class="nav-item dropdown">
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+          aria-haspopup="true" aria-expanded="false">
+          Sandbox
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a ngbDropdownItem class="dropdown-item" (click)="OnClickNavigate('sandbox')">filetest</a>
+        </div>
+      </li> -->
+    </div>
+
+  </div>
+
+
+</nav>
+<div class="col-12">
+    <app-alert></app-alert>
+</div>

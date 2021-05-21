@@ -1,0 +1,26 @@
+.summary-header {
+  color: white;
+
+}
+
+/* .summary-opt {
+
+} */
+.align-right {
+  text-align-last: right;
+}
+
+.icon {
+  place-content: flex-end;
+}
+.btn-primary {
+  background: #202945;
+  color: #eeeeee;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+  background: #aaa;
+  color: #202945;
+}
+::ng-deep .bacb-panel-header > .mat-expansion-indicator:after {
+  color: white;
+}

@@ -1,0 +1,39 @@
+<div class="row mt-2">
+  <div class="col-12">
+    <div class="panel panel-default bacb-panel-bg">
+      <legend class="panel-heading bacb-panel-header pl-3 pr-3">Certification Cycle Summary</legend>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="container-fluid table-responsive mt-2">
+              <mat-table #table [dataSource]="SummaryElements | async" class="table table-striped">
+                <mat-header-row *matHeaderRowDef="DisplayColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; let even = even; columns: DisplayColumns;"></mat-row>
+                <!-- <ng-container matColumnDef="Id">
+                  <mat-header-cell *matHeaderCellDef>Cycle ID</mat-header-cell>
+                  <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement?.GetCurrentCycle().Id }}</mat-cell>
+                </ng-container> -->
+                <ng-container matColumnDef="CertificationType">
+                  <mat-header-cell *matHeaderCellDef>Certification Type</mat-header-cell>
+                  <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement?.Type.Abbrev }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="RenewalDate">
+                  <mat-header-cell *matHeaderCellDef>Renewal Date</mat-header-cell>
+                  <mat-cell *matCellDef="let SummaryElement">{{ GetStringDate(SummaryElement?.GetCurrentCycle().RenewalDate) | date }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Number">
+                  <mat-header-cell *matHeaderCellDef>Certification Number</mat-header-cell>
+                  <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement.Number }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                  <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                  <mat-cell *matCellDef="let SummaryElement">{{ SummaryElement?.GetCurrentCycle().Status.ExternalName }}</mat-cell>
+                </ng-container>
+              </mat-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="col-12">
+  <div *ngFor="let Attestation of Attestations | async">
+    <div class="container mt-4">
+      <!-- Answer -->
+      <div class="col-12">
+        <label class="my-2">
+          <div class="" *ngIf="Attestation.Question.Text != ''; else SingleResponse">
+            {{ Attestation.Question.Text }}
+          </div>
+          <ng-template #SingleResponse>
+            <div  *ngIf="Attestation.Answer == null">
+              {{ Attestation.Question.TrueOption }}
+            </div>
+          </ng-template>
+        </label><br>
+        <i>
+          <b>
+            <div class="mb-4">
+              <div *ngIf="Attestation.Answer == null">Not Answered</div>
+              <div *ngIf="Attestation.Answer?.Answer === 'T'">{{ Attestation.Question.TrueOption }}</div>
+              <div *ngIf="Attestation.Answer?.Answer === 'F'">{{ Attestation.Question.FalseOption }}</div>
+            </div>
+          </b>
+        </i>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="RequireFileUpload">
+    <!-- <app-large-file-upload [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)"></app-large-file-upload> -->
+  </div>
+</div>

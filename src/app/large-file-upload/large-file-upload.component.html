@@ -1,0 +1,29 @@
+<bacb-panel [PanelTitle]=LegendText>
+  <div>
+    Upload a new file
+  </div>
+  <form [formGroup]="uploadForm">
+    <div class="row col-12">
+      <div class="col-6">
+        <mat-form-field class="width-100">
+          <mat-select class="dropdown" formControlName="FileType_Dropdown">
+            <mat-option *ngFor="let type of DropdownFileTypes" [value]="type">
+              {{type.Description}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 row">
+
+        <app-file-upload class="col-8" formControlName="Upload_File" [Progress]="UploadProgress"
+          (FileEvent)="File_Event($event)"  (InstFile)="InstFile"></app-file-upload>
+          <div class="col-4 my-4">
+            <button mat-raised-button color = "primary" class="btn-primary " (click)="OnSubmit()">
+              Save
+            </button>
+          </div>
+
+      </div>
+    </div>
+  </form>
+  <app-large-file-upload-summary [DisplayAllFiles]="DisplayAllFiles" [AllowDeleteButton]="AllowDeleteButton" [AppId]="_AppId" [FileTypes]="FileTypes" (ComponentFileSet)="GetterOfFileSets($event)" (FileCheck)="File_Check_Event($event)"></app-large-file-upload-summary>
+</bacb-panel>

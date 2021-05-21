@@ -1,0 +1,167 @@
+<div class="container">
+  <!-- professional-->
+  <form [formGroup]="ProfessionalForm" (ngSubmit)="OnSubmit()">
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <div class="panel panel-default bacb-panel-bg">
+          <legend class="panel-heading bacb-panel-header">Professional Information</legend>
+
+          <div class="panel-body">
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+              <div class="col-sm-12">
+                <h5> Primary Area Information </h5>
+              </div>
+            </div>
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+              <div class="col-md-6 col-sm-12">
+
+                <mat-form-field class="width-100">
+                  <mat-label>Primary Role in Behavior Analysis</mat-label>
+                  <mat-select [compareWith]="CompareListObj" formControlName="PrimaryRole">
+                    <mat-option *ngFor="let InstRole1 of (RoleList)" [value]="InstRole1">
+                      {{ InstRole1.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <div class="col-md-6 col-sm-12">
+
+                <mat-form-field class="width-100">
+                  <mat-label>Primary Area of Professional Emphasis</mat-label>
+                  <mat-select [compareWith]="CompareListObj" formControlName="PrimaryArea">
+                    <mat-option *ngFor="let InstArea1 of (AreaOfEmphasis)" [value]="InstArea1">
+                      {{ InstArea1.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+
+
+
+            </div>
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+
+              <div class="col-md-6 col-sm-12">
+
+                <mat-form-field class="width-100">
+                  <mat-label>Primary Age of Clientele</mat-label>
+                  <mat-select multiple [compareWith]="CompareListObj" formControlName="ClientAges">
+                    <mat-option *ngFor="let InstAges of (AgesOfClientele )" [value]="InstAges">
+                      {{ InstAges.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+
+
+              <div class="col-md-6 col-sm-12">
+                <div *ngIf= "ProfessionalForm.controls['PrimaryArea'].value">
+                  <mat-form-field *ngIf="ProfessionalForm.controls['PrimaryArea'].value.Value == 'Other'" class="width-100">
+                    <mat-label>Primary Area of Emphasis - Other</mat-label>
+                    <input matInput type="text" formControlName="PrimaryAreaOther">
+                  </mat-form-field>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+              <div class="col-sm-12">
+                <h5> Secondary Area Information </h5>
+              </div>
+            </div>
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+
+              <div class="col-md-6 col-sm-12">
+
+                <mat-form-field class="width-100">
+                  <mat-label>Secondary Role in Behavior Analysis</mat-label>
+                  <mat-select [compareWith]="CompareListObj" formControlName="SecondaryRole">
+                    <mat-option *ngFor="let InstRole2 of (RoleList)" [value]="InstRole2">
+                      {{ InstRole2.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <mat-form-field class="width-100">
+                  <mat-label>Secondary Area of Professional Emphasis</mat-label>
+                  <mat-select [compareWith]="CompareListObj" formControlName="SecondaryArea">
+                    <mat-option *ngFor="let InstArea2 of (AreaOfEmphasis)" [value]="InstArea2">
+                      {{ InstArea2.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+
+              <div class="col-md-6 col-sm-12">
+
+                <mat-form-field class="width-100">
+                  <mat-label>Secondary Age of Clientele</mat-label>
+                  <mat-select multiple [compareWith]="CompareListObj" formControlName="SecondaryClientAges">
+                    <mat-option *ngFor="let InstAges of (SecondaryAgesOfClientele)" [value]="InstAges">
+                      {{ InstAges.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div *ngIf= "ProfessionalForm.controls['SecondaryArea'].value">
+                  <mat-form-field *ngIf="ProfessionalForm.controls['SecondaryArea'].value.Value == 'Other'" class="width-100">
+                    <mat-label>Secondary Area of Emphasis - Other</mat-label>
+                    <input matInput type="text" formControlName="SecondaryAreaOther">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <div class="row mt-3 ml-3 mr-3 mb-3">
+              <div class="col-sm-12">
+                <h5> Other Areas (Select All That Apply)</h5>
+              </div>
+            </div>
+            <div class="row mt-3 ml-3 mr-3">
+              <div class="col-sm-4">
+                <mat-form-field class="width-100">
+                  <mat-label>Other Areas of Professional Emphasis</mat-label>
+                  <mat-select multiple [compareWith]="CompareListObj" formControlName="TertiaryArea">
+                    <mat-option *ngFor="let InstArea3 of (AreaOfEmphasis)" [value]="InstArea3">
+                      {{ InstArea3.Value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 pl-3 pr-3">
+      <div class="col-12 d-flex justify-content-end">
+        <button mat-raised-button color = "primary" class="btn-primary mr-4" type = "button" (click)="OnClickCancel()">
+          Cancel
+        </button>
+        <button mat-raised-button color = "primary" class="btn-primary mr-4" type = "button" (click)="InitForm()">
+          Clear Form
+        </button>
+        <button mat-raised-button color = "primary" class="btn-primary" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

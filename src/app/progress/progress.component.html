@@ -1,0 +1,19 @@
+<div *ngIf="Progress<0; else Loading">
+  Complete!
+</div>
+<ng-template #Loading>
+  <div class="row pl-3 pb-2">
+    <div *ngIf="Progress<99.5; else Waiting">
+      <div class="">Upload Progress: </div>
+    </div>
+    <ng-template #Waiting>
+      <div>Awaiting Confirmation:</div>
+    </ng-template>
+    <div class="progressbarboundary mb-2">
+      <div class="progressbar center" role="progressbar" [style.width.%]="Progress" aria-valuenow="25" aria-valuemin="0"
+        aria-valuemax="100">
+        <div class="width-100 center">{{Progress}}%</div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,97 @@
+<!-- <script id="perlin.frag" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+
+  varying vec2 vTextureCoord;
+
+  uniform sampler2D uperm_sampler;
+  uniform sampler2D igrad_sampler;
+  uniform float time;
+  uniform float darkness;
+
+  float fade(in float t)
+  {
+      return t * t * t * (t * (t * 6.0 - 15.0) + 10.0); // new curve
+  }
+  float perm(in float x)
+  {
+      return texture2D(uperm_sampler, vec2(x / 256.0, 0)).r * 256.0;
+  }
+  float grad(in float x, in vec3 p)
+  {
+      return dot(texture2D(igrad_sampler, vec2(x,0)).rgb, p);
+  }
+  float lerp(in float a, in float b, in float c)
+  {
+      return mix(a,b,c);
+  }
+  float inoise(vec3 p)
+  {
+      vec3 P = mod(floor(p), 256.0);
+      p -= floor(p);
+      vec3 f = vec3(fade(p.x), fade(p.y), fade(p.z));
+      float A = perm(P.x) + P.y;
+      float AA = perm(A) + P.z;
+      float AB = perm(A + 1.0) + P.z;
+      float B =  perm(P.x + 1.0) + P.y;
+      float BA = perm(B) + P.z;
+      float BB = perm(B + 1.0) + P.z;
+
+
+      return lerp(
+          lerp(lerp(grad(perm(AA), p),
+              grad(perm(BA), p + vec3(-1.0, 0.0, 0.0)), f.x),
+              lerp(grad(perm(AB), p + vec3(0.0, -1.0, 0.0)),
+                  grad(perm(BB), p + vec3(-1.0, -1.0, 0.0)), f.x), f.y),
+          lerp(lerp(grad(perm(AA + 1.0), p + vec3(0.0, 0.0, -1.0)),
+                  grad(perm(BA + 1.0), p + vec3(-1.0, 0.0, -1.0)), f.x),
+          lerp(grad(perm(AB + 1.0), p + vec3(0.0, -1.0, -1.0)),
+              grad(perm(BB + 1.0), p + vec3(-1.0, -1.0, -1.0)), f.x), f.y),
+      f.z);
+
+
+  }
+
+  void main(void) {
+
+      float u = gl_FragCoord.x * 0.001;
+      float v = gl_FragCoord.y * 0.001;
+      float w = gl_FragCoord.z * 0.001;
+      float noiseCoef = 0.1;
+      for (float level = 1.0; level < 5.0; level ++)
+      {
+          noiseCoef = noiseCoef + (0.1 * level)
+              * abs(inoise(
+                  vec3(level * u * 10.0,
+                       level * v * 10.0,
+                       time)));
+      }
+
+      noiseCoef = noiseCoef;
+
+      gl_FragColor = vec4(0, noiseCoef, noiseCoef, 1);
+  }
+</script>
+<script id="perlin.vert" type="x-shader/x-vertex">
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec2 vTextureCoord;
+  void main(void) {
+      gl_Position = vec4(aVertexPosition, 1.0);
+      vTextureCoord = aTextureCoord;
+  }
+
+</script> -->
+
+<!-- <script src="./loading.js"></script> -->
+<div class="loading-screen-wrapper noise-element" *ngIf="loading">
+  <!-- <canvas id="splash-canvas" style="border: none;" width="1000px" height="1000px"></canvas> -->
+  <div class="loading-screen-icon  splash-animation">
+      <img [src]="AssetUrl" class="splashAnim fixed" />
+  </div>
+</div>

@@ -1,0 +1,29 @@
+
+
+.btn-gray, .btn-blue:hover, .btn-blue:focus, .btn-blue:active, .btn-blue:active, .open > .dropdown-toggle.btn-blue {
+  background: #d2dce2;
+  color: #202945;
+}
+
+.btn-blue, .btn-gray:hover, .btn-gray:focus, .btn-gray:active, .btn-gray:active, .open > .dropdown-toggle.btn-gray {
+  background: #57798e;
+  color: #eeeeee;
+}
+
+
+.center-object {
+  justify-content: center;
+  text-align: center;
+  text-align-last: center;
+}
+
+.top-bar {
+  border-top: none !important;
+}
+
+
+::ng-deep .bacb-tooltip {
+  font-size: 16px;
+  color: white;
+  background: #202945;
+}

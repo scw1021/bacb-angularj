@@ -1,0 +1,321 @@
+
+<form class="container" [formGroup]="fg" *ngIf = "onSubmitShowSummary == false" style="padding-top: 1.5rem;">
+  <bacb-panel [PanelTitle]='"Personal Profile"'>
+  <!-- Prefix full name suffix -->
+  <div class="row input-area" formGroupName="NameGrp">
+    <legend class="panel-heading bacb-panel-header" style="margin-top: 0%;">Full Name</legend>
+    <!-- <div class="col-md-4 col-sm-6">
+      <mat-form-field>
+        <input matInput type="text" formControlName="Prefix" >
+      </mat-form-field>
+    </div> -->
+    <div class="col-md-4 col-sm-6">
+        {{this.fg.get('NameGrp.FullName').value}}
+        <div *ngIf= "false">
+          <input matInput type="text" formControlName="FullName">
+        </div>
+    </div>
+    <!-- <div class="col-md-4 col-sm-6">
+      <mat-form-field>
+        <mat-label>Suffix</mat-label>
+        <input matInput type="text" formControlName="Suffix" >
+      </mat-form-field>
+    </div> -->
+  </div>
+  <!-- Emails -->
+  <div class="row input-area" formGroupName="EmailGrp">
+    <legend _ngcontent-ghj-c283="" class="panel-heading bacb-panel-header">Email</legend>
+
+    <div class="col-md-6">
+      <mat-form-field class = "w-100">
+        <mat-label>Primary Email</mat-label>
+        <input matInput type="text" formControlName="Primary">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <mat-form-field class = "w-100">
+        <mat-label>Secondary Email</mat-label>
+        <input matInput type="text" formControlName="Secondary">
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Phone -->
+  <div class="row input-area" formGroupName="PhoneGrp">
+    <legend  class="panel-heading bacb-panel-header">Primary Phone Number</legend>
+    <ng-container formGroupName="Primary">
+      <div class="col-lg-3 col-md-6">
+        <mat-form-field>
+          <mat-label>Dial Code</mat-label>
+          <input type="text" aria-label="Primary Phone Dial Code" matInput formControlName="Country"
+            [matAutocomplete]="primaryPhoneCountryAutoComplete">
+            <mat-error  *ngIf = "fg.get('PhoneGrp.Primary.Country').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+            <mat-error  *ngIf = "fg.get('PhoneGrp.Primary.Country').hasError('required')">Dial code is required.</mat-error>
+
+            <mat-autocomplete #primaryPhoneCountryAutoComplete="matAutocomplete" [displayWith]="displayCountryWithDialCode">
+            <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+              {{country | countryDialCode}}
+            </mat-option>
+            <ng-container *ngIf="this.fg.get('PhoneGrp.Primary.Country').value == null">
+              <mat-option *ngFor="let country of defaultCountries" [value]="country" >
+                {{country | countryDialCode}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-hint *ngIf = "fg.get('PhoneGrp.Primary.Country').value == null">Enter and click your country name to select the dial code</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-checkbox formControlName="IsMobile" color ="primary">This number is mobile</mat-checkbox>
+      </div>
+      <div class="col-lg-3 col-md-6" [formGroup] = "this.fg.get('PhoneGrp.Primary')">
+        <mat-form-field>
+          <mat-label>Phone Number</mat-label>
+          <input [errorStateMatcher] = "errorStateMatcher" matInput type="text" formControlName="Number">
+          <mat-error *ngIf = "fg.get('PhoneGrp.Primary').hasError('numberImpossible')"> Invalid Number. </mat-error>
+          <mat-error *ngIf = "fg.get('PhoneGrp.Primary.Number').hasError('required')"> Phone number is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-form-field>
+          <mat-label>Extension</mat-label>
+          <input matInput type="text" formControlName="Ext">
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- AlternatePhone -->
+  <div class="row input-area" formGroupName="PhoneGrp">
+    <legend  class="panel-heading bacb-panel-header">Secondary Phone Number</legend>
+    <ng-container [formGroup]="this.fg.get('PhoneGrp.Alternative')">
+      <div class="col-12" *ngIf = "!fg.get('PhoneGrp.Alternative').valid">
+        <mat-error>If you do not wish to enter a secondary phone, leave all fields blank</mat-error>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-form-field >
+          <mat-label>Dial Code</mat-label>
+          <input type="text" aria-label="Secondary Phone Dial Code" matInput [formControl]="fg.get('PhoneGrp.Alternative.Country')"
+            [matAutocomplete]="primaryPhoneCountryAutoComplete"
+            [errorStateMatcher] = "errorStateMatcher">
+            <mat-error *ngIf = "fg.get('PhoneGrp.Alternative').hasError('dialCodeRequired')">Country code required.</mat-error>
+            <mat-error  *ngIf = "fg.get('PhoneGrp.Alternative.Country').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+            <mat-autocomplete #primaryPhoneCountryAutoComplete="matAutocomplete" [displayWith]="displayCountryWithDialCode">
+            <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+              {{country | countryDialCode}}
+            </mat-option>
+            <ng-container *ngIf="this.fg.get('PhoneGrp.Alternative.Country').value == null">
+              <mat-option *ngFor="let country of defaultCountries" [value]="country">
+                {{country | countryDialCode}} </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-hint *ngIf = "fg.get('PhoneGrp.Alternative.Country').value == null">Enter and click your country name to select the dial code</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-checkbox formControlName="IsMobile" color ="primary">This number is mobile</mat-checkbox>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-form-field>
+          <mat-label>Phone Number</mat-label>
+          <input matInput [errorStateMatcher] = "errorStateMatcher" type="text" formControlName="Number">
+          <mat-error *ngIf = "fg.get('PhoneGrp.Alternative').hasError('numberRequired')">Phone number required</mat-error>
+          <mat-error *ngIf = "fg.get('PhoneGrp.Alternative').hasError('numberImpossible')">Number Invalid</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <mat-form-field>
+          <mat-label>Extension</mat-label>
+          <input matInput type="text" formControlName="Ext">
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </div>
+  <!-- End Phone -->
+  <!-- Demographics -->
+  <div class="row input-area" formGroupName="DemographicGrp">
+    <legend  class="panel-heading bacb-panel-header">About You</legend>
+    <div class="col-md-4 col-sm-6">
+      <mat-form-field>
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="DoBpicker" formControlName="DateOfBirth" novalidate>
+        <mat-datepicker-toggle matSuffix [for]="DoBpicker"></mat-datepicker-toggle>
+        <mat-datepicker #DoBpicker></mat-datepicker>
+        <mat-error>Date of birth is required.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="Gender" [compareWith] = "displayLObj">
+          <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.State').hasError('required')">State is required for US customers.</mat-error>
+
+          <!-- <mat-option>Select a gender</mat-option> -->
+          <mat-option *ngFor="let gender of genders$" [value]="gender">
+            {{ gender | lobj}}
+          </mat-option>
+        </mat-select>
+        <mat-error> Gender is requried. </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <mat-form-field>
+        <mat-label>Ethnicity</mat-label>
+        <mat-select [formControl]="this.fg.get('DemographicGrp.Ethnicity')" [compareWith] = "displayLObj">
+          <mat-option  *ngFor="let ethnicity of ethnicities$" [value]="ethnicity">
+            {{ ethnicity | lobj  }}
+          </mat-option>
+        </mat-select>
+        <mat-error> Ethnicity is requried. </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- End Demographics -->
+  <!-- Address -->
+  <!-- BillingGroup -->
+  <ng-container formGroupName="AddressGrp">
+    <div class="row input-area" formGroupName="BillingGrp">
+      <legend  class="panel-heading bacb-panel-header">Physical Address</legend>
+      <mat-checkbox class="col-12" [formControl]="fg.get('AddressGrp.BillingAndShippingDiffer')" color="primary" >
+        My mailing address is different than my physical address
+      </mat-checkbox>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Address Line 1</mat-label>
+          <input matInput type="text" formControlName="Address1">
+          <mat-error>An address is required.</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Address Line 2</mat-label>
+          <input matInput type="text" formControlName="Address2">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="City">
+          <mat-error>City is required.</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4" *ngIf = "this.fg.get('AddressGrp.BillingGrp.State').enabled">
+        <mat-form-field>
+          <mat-label>State</mat-label>
+          <input matInput type="text" formControlName="State" [matAutocomplete]="billState">
+          <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.State').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+          <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.State').hasError('required')">State is required for US customers.</mat-error>
+          <mat-autocomplete #billState="matAutocomplete" [displayWith]="displayState">
+            <mat-option *ngFor="let state of filteredStates | async" [value]="state" >
+              {{state?.Name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input type="text" aria-label="Secondary Phone Dial Code" matInput formControlName="Country"
+            [matAutocomplete]="billCtry">
+            <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.Country').hasError('required')">Country is required</mat-error>
+            <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.Country').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+          <mat-autocomplete #billCtry="matAutocomplete" [displayWith]="displayCountry">
+            <ng-container *ngIf="!this.fg.get('AddressGrp.BillingGrp.Country').value;">
+              <mat-option *ngFor="let country of defaultCountries" [value]="country" >
+                {{country?.Name}} </mat-option>
+            </ng-container>
+            <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+              {{country?.Name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>Postal Code</mat-label>
+          <input matInput type="text" formControlName="PostalCode">
+          <mat-error  *ngIf = "fg.get('AddressGrp.BillingGrp.PostalCode').hasError('required')">Postal code is required.</mat-error>
+
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <!-- Shipping Group -->
+    <div class="row input-area" formGroupName="ShipGrp" *ngIf="fg.get('AddressGrp.ShipGrp').enabled">
+      <legend  class="panel-heading bacb-panel-header">Mailing Address</legend>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Address Line 1</mat-label>
+          <input matInput type="text" formControlName="Address1">
+          <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.Address1').hasError('required')">Address line one is required.</mat-error>
+
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Address Line 2</mat-label>
+          <input matInput type="text" formControlName="Address2">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="City">
+          <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.City').hasError('required')">City is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4" *ngIf = "this.fg.get('AddressGrp.ShipGrp.State').enabled">
+        <mat-form-field>
+          <mat-label>State</mat-label>
+          <input matInput type="text" formControlName="State" [matAutocomplete]="billState">
+          <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.State').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+          <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.State').hasError('required')">State is required for US customers.</mat-error>
+          <mat-autocomplete #billState="matAutocomplete" [displayWith]="displayState">
+            <mat-option *ngFor="let state of filteredStates | async" [value]="state" >
+              {{state?.Name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input type="text" aria-label="Secondary Phone Dial Code" matInput formControlName="Country"
+            [matAutocomplete]="shipCtry">
+            <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.Country').hasError('valNotObj')">Invalid input. Select an option from the list.</mat-error>
+            <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.Country').hasError('required')">Country is required.</mat-error>
+            <mat-autocomplete #shipCtry="matAutocomplete" [displayWith]="displayCountry">
+            <ng-container *ngIf="!this.fg.get('AddressGrp.ShipGrp.Country').value;">
+              <mat-option *ngFor="let country of defaultCountries" [value]="country" >
+                {{country?.Name}} </mat-option>
+            </ng-container>
+            <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+              {{country?.Name}}
+            </mat-option>
+
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <mat-form-field>
+          <mat-label>Postal Code</mat-label>
+          <input matInput type="text" formControlName="PostalCode">
+          <mat-error  *ngIf = "fg.get('AddressGrp.ShipGrp.PostalCode').hasError('required')">Postal code is required.</mat-error>
+
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+  <div class="d-flex justify-content-between pb-3">
+    <div></div>
+    <button mat-raised-button type = "button" (click)="onSubmit()" color="primary" >Submit</button>
+  </div>
+  <ng-container *ngIf = "false">
+    <input [formControl] = "this.fg.get('Id')">
+  </ng-container>
+</bacb-panel></form>
+<div *ngIf= "onSubmitShowSummary == true">
+  <app-personal-info-summary [passedInForm] = "fg" [summaryLock] = "summaryLock" (toggleEdit) = "this.onSubmitShowSummary = false"></app-personal-info-summary>
+</div>
+<!-- {{this.fg.value | json}} -->
+

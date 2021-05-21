@@ -1,0 +1,158 @@
+<div class="">
+  <div class="col-12">
+
+    <!-- Fourth Edition -->
+    <div class="row" *ngIf="CourseworkFourthData | async as data">
+      <div class="courseSet" *ngIf="data.length > 0">
+        <div class="panel panel-default bacb-panel-bg">
+          <legend class="panel-heading bacb-panel-header">
+            <div class="small-container">
+              <div class="bacb-panel-header-text inner-label">Fourth Edition</div>
+            </div>
+          </legend>
+          <div class="panel-body">
+            <table mat-table [dataSource]="data" class="table table-striped">
+              <div *ngFor="let col of MainHeaders">
+                <ng-container matColumnDef="{{col}}">
+                  <th mat-header-cell *matHeaderCellDef>{{col}}</th>
+                  <td mat-cell *matCellDef="let course"> {{ col == 'Credit Level' ? course['CreditLevel'].Value : course[col]}} </td>
+                  <td mat-cell *matFooterCellDef>
+                    <div *ngIf="col == 'Title'">
+                      <div>Totals</div>
+                      <div>Complete</div>
+                    </div>
+                  </td>
+                </ng-container>
+              </div>
+              <div *ngFor="let col of fourthEditionAlloc">
+                <ng-container matColumnDef="{{col}}">
+                  <th mat-header-cell *matHeaderCellDef [matTooltip]="fourthAbbrevToDisplay(col)"
+                    matTooltipClass="bacb-tooltip">{{col}}</th>
+                  <td mat-cell *matCellDef="let course"> {{course.Hours[col] ? course.Hours[col].Value : 0}} </td>
+                  <td mat-footer-cell *matFooterCellDef>
+                    <div>{{ FourthAllocationTotals(col) | floor }}</div>
+                    <div *ngIf="ColumnCheckFourthEdition(col); else incomplete">
+                      <mat-icon class="complete">check</mat-icon>
+                    </div>
+                    <ng-template #incomplete>
+                      <mat-icon class="incomplete">close</mat-icon>
+                    </ng-template>
+                  </td>
+                </ng-container>
+              </div>
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let course">
+                  <button *ngIf="CanEdit" type="button" class="btn btn-link" (click)="OnClickDelete(course)">
+                    <mat-icon class="bacb-icon">delete</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="FourthHeaders" style="width: 100%;"></tr>
+              <tr mat-row *matRowDef="let row; columns: FourthHeaders;"></tr>
+              <div *ngIf="!showFifthEditionCompletions">
+                <tr mat-footer-row *matFooterRowDef="FourthHeaders"></tr>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fifth Edition -->
+    <div class="row" *ngIf="CourseworkFifthData | async as data">
+      <div class="courseSet" *ngIf="data.length > 0">
+        <div class="panel panel-default bacb-panel-bg">
+          <legend class="panel-heading bacb-panel-header">
+            <div class="small-container">
+              <div class="bacb-panel-header-text inner-label">Fifth Edition</div>
+            </div>
+          </legend>
+          <div class="panel-body">
+            <table mat-table [dataSource]="data" class="table table-striped">
+              <div *ngFor="let col of MainHeaders">
+                <ng-container matColumnDef="{{col}}">
+                  <th mat-header-cell *matHeaderCellDef>{{col}}</th>
+                  <td mat-cell *matCellDef="let course"> {{ col == 'Credit Level' ? course['CreditLevel'].Value : course[col] }} </td>
+                  <td mat-cell *matFooterCellDef>
+                    <div *ngIf="col == 'Title'">
+                      <div>Totals</div>
+                      <div>Complete</div>
+                    </div>
+                  </td>
+                </ng-container>
+              </div>
+              <div *ngFor="let col of fifthEditionAlloc">
+                <ng-container matColumnDef="{{col}}">
+                  <th mat-header-cell *matHeaderCellDef [matTooltip]="fifthAbbrevToDisplay(col)"
+                    matTooltipClass="bacb-tooltip">{{col}}</th>
+                  <td mat-cell *matCellDef="let course"> {{course.Hours[col] ? course.Hours[col].Value : 0}} </td>
+                  <td mat-footer-cell *matFooterCellDef>
+                    <div>{{ FifthAllocationTotals(col) | floor }}</div>
+                    <div *ngIf="ColumnCheckFifthEdition(col); else incomplete">
+                      <mat-icon class="complete">check</mat-icon>
+                    </div>
+                    <ng-template #incomplete>
+                      <mat-icon class="incomplete">close</mat-icon>
+                    </ng-template>
+                  </td>
+                </ng-container>
+              </div>
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let course">
+                  <button *ngIf="CanEdit" type="button" class="btn btn-link" (click)="OnClickDelete(course)">
+                    <mat-icon class="bacb-icon">delete</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="FifthHeaders" style="width: 100%;"></tr>
+              <tr mat-row *matRowDef="let row; columns: FifthHeaders;"></tr>
+              <div *ngIf="!showFourthEditionCompletions">
+                <tr mat-footer-row *matFooterRowDef="FifthHeaders"></tr>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Put Hybrid Here-->
+    <!-- Hybrid Edition -->
+    <div class="row" *ngIf="(CourseworkFourthData | async)?.length && (CourseworkFifthData | async)?.length">
+      <div class="courseSet">
+        <div class="panel panel-default bacb-panel-bg">
+          <legend class="panel-heading bacb-panel-header">
+            <div class="small-container">
+              <div class="bacb-panel-header-text inner-label">Hybrid Edition</div>
+            </div>
+          </legend>
+          <div class="panel-body">
+            <table mat-table [dataSource]="hybridCompletions" class="table table-striped">
+
+              <div *ngFor="let col of hybridAlloc">
+                <ng-container matColumnDef="{{col}}">
+                  <th mat-header-cell *matHeaderCellDef>{{col}}</th>
+                  <td mat-cell *matCellDef="let course"> </td>
+                  <td mat-footer-cell *matFooterCellDef>
+                    <div>{{ HybridAllocationTotals(col) | floor }}</div>
+                    <div *ngIf="ColumnCheckHybrid(col); else incomplete">
+                      <mat-icon class="complete">check</mat-icon>
+                    </div>
+                    <ng-template #incomplete>
+                      <mat-icon class="incomplete">close</mat-icon>
+                    </ng-template>
+                  </td>
+                </ng-container>
+              </div>
+              <tr mat-header-row *matHeaderRowDef="hybridAlloc" style="width: 100%;"></tr>
+              <tr mat-footer-row *matFooterRowDef="hybridAlloc"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

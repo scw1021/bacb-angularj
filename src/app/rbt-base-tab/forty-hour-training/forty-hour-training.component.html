@@ -1,0 +1,15 @@
+<div class="container col-12">
+  <div class="row mt-3 mb-3">
+    <div class="col-sm-12">
+      <div class="instructions ml-3">
+          Please provide your 40 Hour Training documentation below.
+      </div>
+    </div>
+  </div>
+  <app-large-file-upload class="mt-4" [FileTypes]="FileTypes" [LegendText]="'40 Hour Training Document Upload'" (FileCheck)="FileEvent($event)"></app-large-file-upload>
+  <app-attestations class="mt-4" (SectionEvent)="SectionEvent($event)"></app-attestations>
+  <responsible-relationship [ComponentType]="'Training'" (RelationshipEvent)="RelationshipEvent($event)"></responsible-relationship>
+</div>
+<!-- <div>FileCheck: {{ (__FileCheck$ | async).Response }}</div>
+<div>RelationshipCheck: {{ (__RelationshipCheck$ | async).Response }}</div>
+<div>AttestationCheck: {{ (__AttestationCheck$ | async).Response }}</div> -->

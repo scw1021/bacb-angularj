@@ -1,0 +1,11 @@
+<mat-list role= "list" *ngFor = "let message of emailArray | async">
+  <mat-list-item role ="listitem">
+    <div class = "col-4">
+      {{message.subject}}
+    </div>
+    <div class = "col-4">
+      {{message.sendDate | date: 'medium'}}
+    </div>
+    <a mat-button color = "primary" class = "col-4" routerLink='../email-detail' routerLinkActive = "active" (click) = "setSelectedEmail(message)">View This Email</a>
+  </mat-list-item>
+</mat-list>

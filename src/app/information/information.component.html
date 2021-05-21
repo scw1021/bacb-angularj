@@ -1,0 +1,13 @@
+<div *ngIf="Debugging">
+  <bacb-panel *ngIf="ShowText" [PanelTitle]="'Testing Information'">
+    <div class="row">
+      <div class="px-2"><h3>{{BodyTextA}}</h3></div>
+      <div class="px-2"><h3>{{BodyTextB}}</h3></div>
+    </div>
+    <div class="row">
+      <div class="px-2"><h3>{{BodyTextC}}</h3></div>
+      <div class="px-2"><h3>{{BodyTextD}}</h3></div>
+    </div>
+  </bacb-panel>
+  <button class="infoButton" (click)="ClickInfo()">{{ ShowText ? 'Hide Testing Information' : 'Show Testing Information' }}</button>
+</div>

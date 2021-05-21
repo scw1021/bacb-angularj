@@ -1,0 +1,26 @@
+<app-header></app-header>
+<div class="bacb-content container mb-5">
+  <h3 class="panel-heading bacb-panel-header text-center mb-1">
+    Profile Edit
+    <!-- {{CurrentlyRoutedPageStringDescription}} -->
+  </h3>
+
+  <mat-sidenav-container class="panel panel-default bacb-panel-bg sidenav-tall">
+    <mat-sidenav mode="side" opened="true">
+      <mat-nav-list>
+        <mat-list-item routerLinkActive = "active" [routerLinkActiveOptions] = "{exact: true}" [routerLink]="['personal-profile', {summary: 'show'}]" >
+          <a mat-button >Personal Information</a>
+        </mat-list-item>
+
+        <mat-list-item *ngFor="let linky of Links" routerLinkActive = "active" [routerLinkActiveOptions] = "{exact: true}" [routerLink]="linky.path" >
+          <a mat-button >{{ linky.displayString }}</a>
+        </mat-list-item>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="padding-bottom: 2%;">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<app-footer class="footer-fixed"></app-footer>

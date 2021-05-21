@@ -1,0 +1,110 @@
+<!-- <div class="col-12">
+<div class="panel panel-default bacb-panel-bg mt-2 mb-2">
+  <legend class="panel-heading bacb-panel-header">
+    <div class="small-container align-middle">
+      <div>{{ ResponsiblePartyRelationship }} Entry</div>
+      <div class="fill"></div>
+    </div>
+  </legend> -->
+<bacb-panel [PanelTitle]="ResponsiblePartyRelationship + ' Entry'">
+  <form [formGroup]="CustomerForm" (ngSubmit)="OnSubmit()">
+    <div class="row">
+      <div class="col-0 col-sm-1"></div>
+      <div *ngIf="ShowStartDate" class="col-6 col-sm-4">
+        <mat-form-field>
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="StartDatePicker" formControlName="StartDate">
+          <mat-datepicker-toggle matSuffix [for]="StartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #StartDatePicker></mat-datepicker>
+
+        </mat-form-field>
+        <div class="someError" *ngIf="CustomerForm.hasError('ltfiveDays')">Dates cannot be less than 5 days apart</div>
+        <div class="someError" *ngIf="CustomerForm.hasError('gtOneEightyDays')">Dates cannot be more than 180 days apart</div>
+
+      </div>
+
+      <div class="col-6 col-sm-4">
+        <mat-form-field>
+          <mat-label>{{SpecificEndDateString}}</mat-label>
+          <input matInput [matDatepicker]="EndDatePicker" formControlName="EndDate">
+          <mat-datepicker-toggle matSuffix [for]="EndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #EndDatePicker></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="IsSubmitted && this.EndDate.errors" class="someError">
+          <div>{{EndDateErrorMessage}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 pb-3 pb-3">
+      <div class="col-0 col-sm-1"></div>
+      <div class="col-12 col-sm-4">
+        <mat-form-field class="width-100">
+          <mat-label>BACB ID</mat-label>
+          <input type="text" matInput formControlName="BACBID" [matAutocomplete]="auto">
+        </mat-form-field>
+        <div *ngIf="IsSubmitted && this.BACBID.errors" class="someError">
+          <div>You must select a valid BACB ID</div>
+        </div>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="DisplayCustomerFn"
+          (optionSelected)="OnSelectCustomer($event.option.value)">
+          <mat-option *ngIf="IsLoading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!IsLoading">
+            <mat-option *ngFor="let InstCustomer of FilteredCustomers | async" [value]="InstCustomer">
+              {{ InstCustomer.BACBID }}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </div>
+
+      <div class="col-12 col-sm-4">
+        <mat-form-field class="width-100">
+          <mat-label>{{ ResponsiblePartyRelationship }} Name</mat-label>
+          <input matInput readonly formControlName="Name">
+        </mat-form-field>
+        <div *ngIf="CustomerForm?.errors?.notqualified" class="someError">
+          <div>Assessor must have active BCBA or BCaBA certification</div>
+        </div>
+        <div *ngIf="CustomerForm.errors?.nosupervision" class="someError">
+          <div>Assessor must have 8 hour training completed</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="row">
+        <div class="col-0 col-sm-1"></div>
+        <div *ngIf="ShowAgencyField" class="col-12 col-sm-5">
+          <mat-form-field>
+            <mat-label>Training Agency</mat-label>
+            <input matInput formControlName="AgencyName">
+          </mat-form-field>`
+          <div *ngIf="IsSubmitted && this.AgencyName.errors" class="someError">
+            <div>Agency is Required</div>
+          </div>
+        </div>
+        <div *ngIf="ShowRelationshipField" class="col-12 col-sm-5">
+          <mat-form-field class="width-100">
+            <mat-label>Relationship of {{ ResponsiblePartyRelationship }} to Applicant</mat-label>
+            <input matInput formControlName="RelationshipName">
+          </mat-form-field>
+          <div *ngIf="IsSubmitted && this.RelationshipName.errors" class="someError">
+            <div>Relationship is Required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-2 ml-3 mr-3"><br></div>
+      <div class="col-sm-8 d-flex justify-content-end">
+
+        <button mat-raised-button color = "primary" class="btn-primary" (click)="OnSubmit()">
+          Save
+        </button>
+      </div>
+      <div class="col-sm-2 ml-3 mr-3"><br></div>
+    </div>
+  </form>
+</bacb-panel>
+<!-- </div>
+</div> -->

@@ -1,0 +1,44 @@
+<!-- my degrees-->
+<div class="dropdown-divider"></div>
+<div class="row mt-4">
+  <div class="col-sm-12">
+      <div class="panel panel-default bacb-panel-bg">
+          <div class="panel-body">
+              <table mat-table [dataSource]="DegreeArr$ | async" class="table table-striped">
+                  <tr mat-header-row *matHeaderRowDef="DisplayedTableColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: DisplayedTableColumns;"></tr>
+                  <ng-container matColumnDef="Level">
+                      <th mat-header-cell *matHeaderCellDef>Degree Level</th>
+                      <td mat-cell *matCellDef="let Degree">{{Degree.Type?.Value}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Major">
+                      <th mat-header-cell *matHeaderCellDef>Major</th>
+                      <td mat-cell *matCellDef="let Degree">{{Degree.Major}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="DateConferred">
+                      <th mat-header-cell *matHeaderCellDef>Date Conferred</th>
+                      <td mat-cell *matCellDef="let Degree">{{Degree.DateConferred | date:'shortDate'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Institution">
+                      <th mat-header-cell *matHeaderCellDef>Institution</th>
+                      <td mat-cell *matCellDef="let Degree">{{Degree.Institution?.Name}}</td>
+                  </ng-container>
+                  <ng-container  matColumnDef="Actions">
+                          <th mat-header-cell *matHeaderCellDef>Actions</th>
+                          <td mat-cell *matCellDef="let Degree">
+                            <ng-template *ngIf="CanEdit">
+                              <button type="button" class="btn btn-link border" (click)="OnClickEdit()">
+                                  <mat-icon class="bacb-icon" inline="true">edit</mat-icon>
+                              </button>
+                              <button type="button" class="btn btn-link border" (click)="OnClickDelete(Degree)">
+                                  <mat-icon class="bacb-icon" inline="true">delete</mat-icon>
+                              </button>
+                            </ng-template>
+
+                          </td>
+                  </ng-container>
+              </table>
+          </div> <!-- end inner panel body -->
+      </div> <!-- end outer panel body -->
+  </div>
+</div>

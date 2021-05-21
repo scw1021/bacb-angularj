@@ -1,0 +1,14 @@
+.complete {
+  color: #66dd66;
+}
+.incomplete {
+  color: #dd6666;
+}
+.sticky {
+position: fixed;
+top: 0;
+width: 100%
+}
+.check {
+  vertical-align: sub;
+}

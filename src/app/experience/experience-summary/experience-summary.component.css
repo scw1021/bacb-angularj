@@ -1,0 +1,64 @@
+.small-container {
+  display: flex;
+}
+
+.fill {
+  flex: 1;
+}
+
+
+.highlight {
+  background: #e0ffff
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-cell:first-child, .mat-cell:first-child, .mat-footer-cell:first-child{
+  flex:20%;
+}
+
+.mat-header-cell:nth-child(2), .mat-cell:nth-child(2), .mat-footer-cell:nth-child(2){
+  flex:20%;
+}
+
+.mat-header-cell:nth-child(3), .mat-cell:nth-child(3), .mat-footer-cell:nth-child(3){
+  flex:5%;
+}
+
+.mat-header-cell:nth-child(4), .mat-cell:nth-child(4), .mat-footer-cell:nth-child(4){
+  flex:5%;
+}
+
+.mat-header-column-SupervisedHours, .mat-column-SupervisedHours, .mat-footer-column-SupervisedHours {
+  flex: 0 0 2rem !important;
+  width: 2rem !important;
+}
+
+.mat-header-column-IndependentHours, .mat-column-IndependentHours, .mat-footer-column-IndependentHours {
+  flex: 0 0 2rem !important;
+  width: 2rem !important;
+}
+
+.mat-header-column-TotalHours, .mat-column-TotalHours, .mat-footer-column-TotalHours {
+  flex: 0 0 2rem !important;
+  width: 2rem !important;
+}
+
+.mat-header-column-CalculatedHours, .mat-column-CalculatedHours, .mat-footer-column-CalculatedHours {
+  flex: 0 0 2rem !important;
+  width: 2rem !important;
+}
+
+.mat-header-cell:last-child,.mat-cell:last-child, .mat-footer-cell:last-child(2){
+  flex:10%
+}
+
+.mat-tooltip.largerTooltip {
+  font-size: 12px;
+}
+
+.mat-list .mat-list-item {
+  height: 18px; /* default is 72px */
+}

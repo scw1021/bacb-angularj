@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row mt-3 mb-3">
+    <div class="col-sm-12">
+      <div class="instructions ml-3">
+        Please provide your background check information below.
+      </div>
+    </div>
+  </div>
+  <app-large-file-upload class="mt-4" [LegendText]="'Age and Background Check Document Upload'" [InstAppData]="BaseAppData" [InstComponentData]="ComponentData" [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)"></app-large-file-upload>
+  <app-attestations class="mt-4" (SectionEvent)="SectionEvent($event)"></app-attestations>
+  <responsible-relationship [ComponentType]="'BackgroundCheck'" (RelationshipEvent)="RelationshipEvent($event)" class="mt-4" ></responsible-relationship>
+</div>
+<!-- <div>FileCheck: {{ (__FileCheck$ | async).Response }}</div>
+<div>RelationshipCheck: {{ (__RelationshipCheck$ | async).Response }}</div>
+<div>AttestationCheck: {{ (__AttestationCheck$ | async).Response }}</div> -->

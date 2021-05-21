@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row mt-3 mb-3">
+    <div class="col-sm-12">
+      <div class="instructions ml-3">
+        Please provide your Competency Assessment information below.
+      </div>
+    </div>
+  </div>
+  <app-large-file-upload [FileTypes]="FileTypes" (FileCheck)="FileEvent($event)" [LegendText]="'Competency Assessment Document Upload'" ></app-large-file-upload>
+  <competency-skills-assessed class="mt-4" [InstAppData]="BaseAppData" (SelectedSkillsEmitter)="EvaluateSkillsResponse($event)"></competency-skills-assessed>
+  <responsible-relationship [ComponentType]="'Competency'" (RelationshipEvent)="RelationshipEvent($event)"></responsible-relationship>
+</div>
+<app-information
+  [BodyTextB]="'Please use the following BACB ID for testing purposes'"
+  [BodyTextA]="'Competency requires a user with a Certification Cycle, so most users will not work at this time'"
+  [BodyTextC]="'0308351'"
+  [BodyTextD]="'AAAiden'">
+</app-information>
+<!-- <div>FileCheck: {{ (__FileCheck$ | async).Response }}</div>
+<div>RelationshipCheck: {{ (__RelationshipCheck$ | async).Response }}</div> -->
+<!-- <div>AttestationCheck: {{ (__AttestationCheck$ | async).Response }}</div> -->

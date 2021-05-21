@@ -1,0 +1,24 @@
+
+
+.profile {
+    right: 17px;
+    top: 3px;
+    position: relative;
+    color: #202945;
+}
+
+.edit-header {
+  color: white;
+
+}
+
+.icon {
+  place-content: flex-end;
+}
+::ng-deep .bacb-panel-header > .mat-expansion-indicator:after {
+  color: white;
+}
+
+.sidenav-tall{
+  min-height: 20rem;
+}

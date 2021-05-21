@@ -1,0 +1,24 @@
+
+.center-object {
+  justify-content: center;
+  text-align: center;
+  text-align-last: center;
+}
+
+.small-container {
+  display: flex;
+}
+
+.fill {
+  flex: 1;
+}
+
+
+/* This is specifically  here to stop the obnoxious scrollbar at the bottom */
+div.row{
+   max-width: 100%; 
+}
+
+.padbtn{
+  margin: 2rem;
+}

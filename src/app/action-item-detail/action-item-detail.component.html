@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="bacb-content container mb-5">
+  <div class="col-sm-12 center-object">
+  <div class="grid-container">
+
+    <div *ngIf = "actionItemDataArr !== undefined && actionItemDataArr.length > 0; else noActionItems;">
+      <mat-card *ngFor="let actionItem of actionItemDataArr; let index" style = "margin-bottom: 20px; padding: 1%">
+        <div class="panel panel-default bacb-panel-bg">
+          <h3 class = "panel-heading bacb-panel-header text-center mb-1">{{ actionItem.Type.Value }}</h3>
+        </div>
+        <h6>Abstract: {{actionItem.Abstract}}</h6>
+        <h6>Status: {{actionItem.Status.Value}}</h6>
+        <div *ngIf="actionItem.DocumentRequired">
+          <h6> Document Upload Required </h6>
+          <app-large-file-upload [LegendText]="'Before this gets into production, programmatically acquire the file type from backend'" [FileTypes]="FileTypes" (FileCheck)="fileEvent($event, actionItem)"></app-large-file-upload>
+        </div>
+        <div class = "row d-flex justify-content-center" >
+          <div class = "col-md-6 col-sm-6 col-lg-6 text-center">
+            <h6 class = "text-center">By clicking the button below, you are indicating that you have thoroughly read and <em>fully</em> completed this action item. Clicking it prematurely could lead to longer wait times.</h6>
+            <button class = "text-center" mat-raised-button type = "button" [disabled] = "actionItem.Status.Value == 'Submitted'" (click) = "onUserClicksActionItemCompletedButton(actionItem)">I have completed this action item</button>
+            <h6 *ngIf = "actionItem.Status.Value == 'Submitted'">This action item has been submitted. You can still upload a document if necessary</h6>
+          </div>
+        </div>
+        <div *ngIf="checkDisplayCustomTextInTemplate(actionItem); else customTextHidden" >
+          <button mat-raised-button color = "primary" (click) = "serviceActionItemIdUpdate(actionItem)">Hide Full text</button>
+          <div [innerHTML] = "actionItem.CustomText | safe: 'html'"></div>
+        </div>
+        <ng-template #customTextHidden>
+          <button mat-raised-button color = "primary" (click) = "serviceActionItemIdUpdate(actionItem)">Show Full Text</button>
+        </ng-template>
+      </mat-card>
+    </div>
+
+      <ng-template #noActionItems>
+
+            <h1 class = "text-center">No action items found</h1>
+
+      </ng-template>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<app-header></app-header>
+
+<div class=" bacb-content container mt-4" fxLayout="column">
+  <div *ngIf="(CurrentApplication ).Status == 'Incomplete'; else SummaryOnly">
+    <nav mat-tab-nav-bar >
+      <a mat-tab-link *ngFor="let Link of Links"
+          [routerLink] = "Link.Path"
+         (click)="activeLink = Link"
+         routerLinkActive #rla = "routerLinkActive"
+         [active] = "rla.isActive">
+        <div >
+          <mat-icon *ngIf="Link.Index != null" class="check {{ Check[Link.Index] ? 'complete' : 'incomplete' }}" >
+            {{ Check[Link.Index] ? 'check' : 'close' }}
+          </mat-icon>
+          {{Link.Title}}
+
+        </div>
+      </a>
+      <!-- Summary section goes here to drop check system -->
+    </nav>
+    <router-outlet></router-outlet>
+
+    <!-- <app-navigation fxFlexOffset="auto" [IsFirst]="OnInstructions" [IsLast]="OnSummary" (PageChange)="OnPageChange($event)"></app-navigation> -->
+  </div>
+  <ng-template #SummaryOnly>
+    <app-submitted-header></app-submitted-header>
+    <summary [CanEditSummary]="false"></summary>
+  </ng-template>
+</div>
+
+<app-footer class="footer-fixed"></app-footer>

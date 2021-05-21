@@ -1,0 +1,26 @@
+.unitTest {
+  border: solid;
+  border-width: 1px;
+  border-color: black;
+  background-color: gainsboro;
+  font-size: large;
+}
+
+.confirmation {
+  color: green;
+}
+.error {
+  color: red;
+}
+
+.SetHeader {
+  font-size: 24px;
+}
+
+.description {
+  font-size: 16px;
+  font-style: italic;
+}
+.rate {
+  font-size: 24px;
+}

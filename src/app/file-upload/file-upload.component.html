@@ -1,0 +1,6 @@
+<div [formGroup]="form">
+  <span class="">Choose file or drag and drop file here</span><br>
+  <input id="inputFile" class="file-input py-2" type="file" (change)="onFileChanged($event)">
+</div>
+
+<app-progress class="" [Progress]="Progress"></app-progress>

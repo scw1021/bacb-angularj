@@ -1,0 +1,127 @@
+<app-header></app-header>
+
+<div class="container bacb-content">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex center-object">
+        <h1 class="page-title">Applications</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Buttons the correct way -->
+  <div class="row">
+    <div class="col-sm-12 p-0 center-object">
+      <span class="btn-group col-sm-2" ngbDropdown role="applications" aria-label="BCBA Dropdown">
+        <button class="btn btn-gray" ngbDropdownToggle>BCBA</button>
+        <span class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="OnClickBCBA('1')">Start New Certification Application - Option 1</button>
+          <button ngbDropdownItem (click)="OnClickBCBA('2')">Start New Certification Application - Option 2</button>
+          <button ngbDropdownItem (click)="OnClickBCBA('3')">Start New Certification Application - Option 3</button>
+          <button ngbDropdownItem (click)="OnClickBCBA('4')">Start Recertificaiton Application</button>
+          <button ngbDropdownItem (click)="OnClickBCBA('6')">Start Qualify via Past Certification Application</button>
+          <button ngbDropdownItem (click)="OnClickBCBA('7')">Start Exam Retake Application</button>
+        </span>
+      </span>
+      <span class="col-sm-1">
+        &nbsp;
+      </span>
+      <span class="btn-group col-sm-2" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-gray" ngbDropdownToggle>BCaBA</button>
+        <span class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="OnClickBCaBA('1')">Start New Certification Application</button>
+          <button ngbDropdownItem (click)="OnClickBCaBA('4')">Start Recertificaiton Application</button>
+          <button ngbDropdownItem (click)="OnClickBCaBA('6')">Start Qualify via Past Certification Application</button>
+          <button ngbDropdownItem (click)="OnClickBCaBA('7')">Start Exam Retake Application</button>
+        </span>
+      </span>
+      <span class="col-sm-1">
+        &nbsp;
+      </span>
+      <span class="btn-group col-sm-2" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-gray" ngbDropdownToggle>RBT</button>
+        <span class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="OnClickRBT('1')">Start New Certification Application</button>
+          <button ngbDropdownItem (click)="OnClickRBT('5')">Start Renewal Application</button>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div>Notes to testers: The top buttons allow for all applications, the bottom button is the available applications based on certifications. To test, start and complete an application. To create a new cert cycle, click the payment button and 'pay' for the application. The 'Add File' button is currently inactive, and will be hidden/displayed for additional file requirements.</div>
+  <div class="row">
+
+    <div class="col-sm-12 p-0 center-object">
+      <span class="btn-group col-sm-2" ngbDropdown role="applications" aria-label="BCBA Dropdown">
+        <button class="btn btn-gray" ngbDropdownToggle>Available Applications</button>
+        <span class="dropdown-menu" ngbDropdownMenu>
+          <div *ngFor="let option of LineItems | async">
+            <button ngbDropdownItem (click)="OnClickLineItem(option)">{{ option.Name }}</button>
+          </div>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <!-- fix table -->
+
+  <mat-card class="">
+    <div class="row">
+      <div class="col-sm-12 center-object">
+        <h3 class="panel-heading bacb-panel-header text-center mb-1"> Application History </h3>
+        <table mat-table [dataSource]="Applications | async" class="table table-striped ">
+          <ng-container matColumnDef="Type">
+            <th class="top-bar" mat-header-cell *matHeaderCellDef>Exam Type</th>
+            <td mat-cell *matCellDef="let App">{{ App.CertType.Abbrev }} {{ App.AppType.Name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="Status">
+            <th class="top-bar" mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let App"> {{ App.Status }} </td>
+          </ng-container>
+          <ng-container matColumnDef="DateCreated">
+            <th class="top-bar" mat-header-cell *matHeaderCellDef>Created</th>
+            <td mat-cell *matCellDef="let App"> {{ App.DateCreated | date:'shortDate' }}</td>
+          </ng-container>
+           <ng-container matColumnDef="DateSubmitted">
+            <th class="top-bar" mat-header-cell *matHeaderCellDef>Date Submitted</th>
+            <td mat-cell *matCellDef="let App"> {{ App.DateSubmitted ? (App.DateSubmitted | date:'shortDate') : "Not Submitted" }}</td>
+          </ng-container>
+          <ng-container matColumnDef="Actions">
+            <th class="top-bar" mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let App">
+              <div class="justify-content-end">
+                <button matTooltip="Edit the Application" matTooltipClass="bacb-tooltip" type="button" class="mx-1 btn btn-link border"
+                  *ngIf="App.Status == 'Incomplete' || App.Status == 'Awaiting Applicant Feedback'" (click)="OnClickEdit(App)">
+                  <mat-icon class="bacb-icon">edit</mat-icon>
+                </button>
+                <button matTooltip="Review Submitted Application" matTooltipClass="bacb-tooltip" type="button" class="mx-1 btn btn-link border"
+                  *ngIf="App.Status != 'Incomplete'" (click)="OnClickEdit(App)">
+                  <mat-icon class="bacb-icon">search</mat-icon>
+                </button>
+                <button matTooltip="Submit a File" type="button" matTooltipClass="bacb-tooltip" class="mx-1 btn btn-link border"
+                  (click)="OnClickAddFile(App)">
+                  <mat-icon class="bacb-icon">attach_file</mat-icon>
+                </button>
+                <button matTooltip="Delete the Application" matTooltipClass="bacb-tooltip" type="button" class="mx-1 btn btn-link border"
+                  *ngIf="App.Status == 'Incomplete'" (click)="OnClickDelete(App)">
+                  <mat-icon class="bacb-icon">delete</mat-icon>
+                </button>
+                <button matTooltip="Make a Payment" matTooltipClass="bacb-tooltip" type="button" class="mx-1 btn btn-link border"
+                  *ngIf="App.Status == 'Submitted - Awaiting Payment & Documents'" (click)="OnClickPayNow(App)">
+                  <mat-icon class="bacb-icon">payment</mat-icon>
+                </button>
+                <button matTooltip="Start Exam Retake Application" matTooltipClass="bacb-tooltip" type="button" class="mx-1 btn btn-link border"
+                  *ngIf="App.Status == 'Failed'" (click)="OnClickRetake(App)">
+                  <mat-icon class="bacb-icon">open_in_new</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="DisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: DisplayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card>
+
+</div> <!-- end container  -->
+<app-footer class="footer-fixed"></app-footer>

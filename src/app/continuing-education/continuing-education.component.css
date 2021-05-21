@@ -1,0 +1,8 @@
+.add-ce-button-container {
+  text-align: right;
+}
+.center-object {
+  justify-content: center;
+  text-align: center;
+  text-align-last: center;
+}

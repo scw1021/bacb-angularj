@@ -1,0 +1,104 @@
+<app-header></app-header>
+
+
+<div class=" bacb-content container" >
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex center-object">
+        <h1 class="page-title">Invoices</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <mat-expansion-panel [expanded]="true" class="mt-1" hideToggle>
+      <mat-expansion-panel-header class="panel-heading bacb-panel-header">
+        <mat-panel-title>
+          <h5 class="payment-header">
+            Invoice Information
+          </h5>
+        </mat-panel-title>
+        <mat-panel-description class="summary-header icon">
+          <mat-icon class="payment-header">file</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mt-2">
+        <h5>Active Invoices</h5>
+        <div class="debugging">The payment feature of this application is under development.
+          For now, just use CC# 4111 1111 1111 1111
+        </div>
+        <!-- <div class="debugging">The payment feature of this application is under development.
+          For now, just select a 'Date Range' from the options and click the payment button for an application.
+          The selected dates will be the certification cycle as though the application was approved
+          immediately.
+        </div> -->
+      </div>
+      <!-- <mat-radio-group id="CertCycleDate" class="invoice-radio-group" aria-label="Select an Option">
+        <mat-radio-button (change)="OnRadioDebug('1/1/2020')">1/1/2020 - 1/1/2022: Just Started</mat-radio-button>
+        <mat-radio-button (change)="OnRadioDebug('3/1/2018')">3/1/2018 - 3/1/2020: Within 45 Days of expiration</mat-radio-button>
+        <mat-radio-button (change)="OnRadioDebug('1/1/2018')">1/1/2018 - 1/1/2020: Just Expired</mat-radio-button>
+        <mat-radio-button (change)="OnRadioDebug('1/1/2016')">1/1/2016 - 1/1/2018: Expired > 2yrs ago</mat-radio-button>
+      </mat-radio-group> -->
+
+      <div class="bacb-panel-bg">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-12 mt-3">
+              <div class="container-fluid table-responsive">
+                <mat-table #table [dataSource]="Invoices" class="table table-striped">
+
+                  <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; let even = even; columns: DisplayedColumns;"></mat-row>
+                  <!-- <mat-footer-row *matFooterRowDef="DisplayedColumns"></mat-footer-row> -->
+                  <ng-container matColumnDef="Line Item">
+                    <mat-header-cell *matHeaderCellDef>Line Item</mat-header-cell>
+                    <mat-cell *matCellDef="let Invoice">{{ Invoice.Version?.Name }}</mat-cell>
+                    <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Price">
+                    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+                    <mat-cell *matCellDef="let Invoice">${{ Invoice.Version?.Price.toFixed(2) }} </mat-cell>
+                    <mat-footer-cell *matFooterCellDef><b>Total:</b></mat-footer-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Paid">
+                    <mat-header-cell *matHeaderCellDef>Is Paid</mat-header-cell>
+                    <mat-cell *matCellDef="let Invoice">{{ Invoice.PaymentId ? 'Yes' : 'No' }}</mat-cell>
+                    <!-- <mat-footer-cell *matFooterCellDef>{{ HourTotal('8')}}</mat-footer-cell> -->
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let Invoice">
+                      <div *ngIf="!Invoice.PaymentId">
+                        <button type="button" class="btn btn-link" (click)="OnClickCheck(Invoice)">
+                          <mat-icon>payment</mat-icon>
+                        </button>
+                      </div>
+                    </mat-cell>
+                    <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+                  </ng-container>
+                </mat-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div *ngIf="Invoice$ | async as Invoice">
+    <app-alt-payment
+      [chargeAmount]="Invoice.Version.Price"
+      [chargeTitle]="Invoice.Version.Name"
+      [transactionId]="Invoice.Id"
+      [allowChoose]="true"
+      [showCardholderName]="true"
+      [enablePaypalCheckout]="true"
+      [currency]="'USD'"
+      [allowChoose]="true"
+      [enableCVV]="true"
+      (paymentStatus)="onPaymentStatus($event)"
+      (dropinLoaded)="onDropinLoaded($event)">
+    </app-alt-payment>
+  </div>
+
+</div>
+<app-footer class="footer-fixed"></app-footer>

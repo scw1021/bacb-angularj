@@ -1,0 +1,13 @@
+<div class="bacb-card profile-header-border-1 portal-box-card">
+  <div class="card-header d-flex justify-content-center profile-header profile-card-rounded">
+    <h2 class="card-title card-title-bar mb-0">BACB NEWS</h2>
+  </div>
+  <div class="card-body profile-card-body-border">
+    <ul class="news">
+      <li *ngFor="let newsstory of (News | async)" class="my-2">
+        <h5 class="card-title mb-2">{{ newsstory.Title }}</h5> <div [innerHTML]="newsstory.FullText | safe:'html'"></div>
+      </li>
+    </ul>
+    <!-- <button mat-raised-button color="primary">View More</button> -->
+  </div>
+</div>

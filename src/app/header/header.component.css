@@ -1,0 +1,134 @@
+.btn-primary {
+  background: #202945;
+  color: #eeeeee;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+  background: #aaa;
+  color: #202945;
+}
+.nav-item:hover {
+background: #ddd;
+color: #202945;
+}
+.dropdown {
+background: white;
+position: relative;
+display: inline-block;
+padding-top: 10px;
+padding-bottom: 10px;
+font-size: 20px;
+border-top-width: 1px;
+border-top-style: solid;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+cursor: pointer;
+}
+.dropdown-center {
+padding-left: 5px;
+padding-right: 5px;
+}
+.navbar-link {
+  background: white;
+position: relative;
+display: inline-block;
+padding-top: 10px;
+padding-bottom: 10px;
+font-size: 20px;
+border-top-width: 1px;
+border-top-style: solid;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+cursor: pointer;
+}
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+.dropdown-item {
+cursor: pointer;
+}
+.dropdown-menu {
+cursor: pointer;
+}
+.dropdown-menu-right {
+  text-align: right;
+
+}
+
+.dropdown-content a:hover {background-color: #ccc;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.profile {
+  right: 17px;
+  top: 3px;
+  position: relative;
+  color: #202945;
+}
+.success {
+  background-color: #66dd66;
+}
+.error {
+  background-color: #dd6666;
+}
+.header {
+width: 100%;
+margin-right: auto;
+margin-left: auto;
+/* margin-bottom: 3rem!important; */
+/* padding-right: 15px;
+padding-left: 15px; */
+}
+.bacb-header {
+  background:linear-gradient(
+    to bottom,
+  rgba(255,255,255,1.0),
+  rgba(255,255,255, 0.5));
+  /* border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #202945; */
+}
+.white-navbar {
+  background: white;
+}
+
+.button-set {
+text-align: center;
+}
+
+.navlink {
+border-left-color: #f2f2f2;
+border-right-color: #f2f2f2;
+border-top-color: #aaa;
+border-bottom-color: #aaa;
+border-top-style: solid;
+border-bottom-style: solid;
+border-top-width: 5px;
+border-bottom-width: 1px;
+background: white;
+}
+.navlink-center {
+border-left-style: solid;
+border-right-style: solid;
+border-left-width: 3px;
+border-right-width: 2px;
+
+}
+.navigation-bar {
+  display:block;
+  width: 100%;
+}
+.navigation-icon {
+  text-align: right;
+  padding-right: 15px;
+}
+.align-right {
+  text-align: right;
+  justify-content: flex-end;
+}
+

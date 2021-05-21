@@ -1,0 +1,48 @@
+/* *{border: 1px;
+border-style: solid;} */
+
+.input-area{
+    background-color: white;
+}
+
+/* .input-area div{
+       
+    background-color: #f2f2f2;
+
+    
+} */
+
+
+button{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+div.input-area{
+    background-color: #f2f2f2;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+
+legend{ 
+    margin-top: 1.5rem;
+}
+
+div.mat-form-field{
+    background-color: black;
+}
+
+input{
+    max-width: 100%;
+    max-height: min-content;
+}
+
+
+mat-hint{
+    margin-bottom: .5rem;
+    max-height: fit-content;
+}
+mat-form-field{
+    width: 100%;
+}

@@ -1,0 +1,19 @@
+.profile {
+    background-color: red;
+}
+.profile-card-body-border {
+    border: 0px solid;
+}
+.portal-box-card {
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+.view-more-btn {
+    background-color: #202945;
+    font-size: 1em;
+    font-weight: lighter;
+}
+
+/* profile bar hover */
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+    background-color: #afc1ce !important;
+}

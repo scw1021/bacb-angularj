@@ -1,0 +1,96 @@
+<app-header></app-header>
+<div class="bacb-content container ">
+<div class="panel panel-default bacb-panel-bg mt-2 mb-2">
+   <legend class="panel-heading bacb-panel-header">
+      <div class="small-container align-middle">
+         <div>Eight Hour Training</div>
+      </div>
+   </legend>
+   <div class="container" [formGroup]="fg">
+      To acquire or maintain supervisor eligibility you must complete an eight hour training class with an ACE provider and then complete the form below.  To enter your training, find your instructor, enter the end date of your training, and upload the document below. 
+      <div class="row">
+        <div class="col-12" style="padding: 1rem;">
+          <h6 style="margin-top: auto">Find instructor by: </h6>
+          <div>
+             <mat-button-toggle-group value = "BACBID"  (change)="this.setFindBy($event.value)"
+                aria-label="Font Style">
+                <mat-button-toggle value="BACBID"> BACB ID</mat-button-toggle>
+                <mat-button-toggle value="AceNumber">Ace Provider Number</mat-button-toggle>
+             </mat-button-toggle-group>
+          </div>
+       
+    </div>
+
+        <span class="col-6">
+            <mat-form-field>
+               <mat-label>Event End Date</mat-label>
+               <input matInput [matDatepicker]="EndDatePkr"
+                  formControlName="EndDate" />
+               <mat-datepicker-toggle matSuffix [for]="EndDatePkr">
+               </mat-datepicker-toggle>
+               <mat-datepicker #EndDatePkr></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf = "this.fg.get('EndDate').touched && !this.fg.get('EndDate').valid">End Date required.</mat-error>
+         </span>
+         <span class="col-6">
+            <mat-form-field style="width: 100%">
+               <mat-label>Training Type</mat-label>
+               <input matInput formControlName="TrainingType" />
+            </mat-form-field>
+         </span>
+      </div>
+      <ng-container [formGroup]="this.fg.get('AceGroup')">
+         <div class="row" *ngIf="findBy == 'AceNumber'">
+            <span class="col-6">
+               <mat-form-field>
+                  <mat-label>Ace Provider Number</mat-label>
+                  <input matInput #aceProviderIn formControlName="AceProviderNumber" />
+                  <mat-hint align="end">{{aceProviderIn.value?.length || 0}}/7</mat-hint>
+                </mat-form-field>
+
+               <mat-error *ngIf = "this.fg.get('AceGroup.AceProviderNumber').touched && !this.fg.get('AceGroup.AceProviderNumber').valid">ACE Provider Number is required</mat-error>
+
+            </span>
+            <span class="col-6">
+               <mat-form-field>
+                  <mat-label>Ace Provider Name</mat-label>
+                  <input matInput formControlName="AceName"/>
+                  <mat-hint align="end">This will auto-fill upon entering your ace provider number</mat-hint>
+
+                </mat-form-field>
+            </span>
+         </div>
+      </ng-container>
+      <ng-container [formGroup]="this.fg.get('BACBIDGroup')">
+         <div *ngIf="findBy == 'BACBID'" class="row" style="margin-bottom: 2rem;">
+            <span class="col-6">
+               <mat-form-field>
+                  <mat-label>Instructor's BACB ID</mat-label>
+                  <input matInput #bacbIdIn [formControl]="this.fg.get('BACBIDGroup.InstructorBACBID')" />
+                  <mat-hint align="end">{{bacbIdIn.value?.length || 0}}/7</mat-hint>
+                  <mat-error *ngIf = "this.fg.get('BACBIDGroup.InstructorBACBID').touched && this.fg.get('BACBIDGroup.InstructorBACBID').getError('required')">Instructors BACBID is required. To find your instructor by ACE Provider number instead, click the button above.</mat-error>
+                  <mat-error *ngIf = "this.fg.get('BACBIDGroup.InstructorBACBID').touched && this.fg.get('BACBIDGroup.InstructorBACBID').getError('overSevenDigits')">Seven digits required</mat-error>
+                  <mat-error *ngIf = "this.fg.get('BACBIDGroup.InstructorBACBID').touched && this.fg.get('BACBIDGroup.InstructorBACBID').getError('underSevenDigits')">Seven digits required</mat-error>
+                  <mat-error *ngIf = "this.fg.get('BACBIDGroup.InstructorBACBID').touched && this.fg.get('BACBIDGroup.InstructorBACBID').getError('ContainsLetters')">Please enter only the seven numeric digits of the BACB ID</mat-error>
+               </mat-form-field>
+            </span>
+            <span class="col-6">
+               <mat-form-field>
+                  <mat-label>Instructor Name</mat-label>
+                  <input matInput formControlName="InstructorName" />
+                  <mat-hint align="end">This will auto-fill upon entering instructor's BACB ID</mat-hint>
+                </mat-form-field>
+            </span>
+         </div>
+      </ng-container>
+      <div class="container" style="overflow: auto; ">
+         
+         <app-large-file-upload class="mt-4" [FileTypes]="eightHour" [LegendText]="'Eight Hour Training Document Upload'" (FileCheck)="fileCheck($event)"></app-large-file-upload>
+         <span class="d-flex flex-row justify-content-between" style="padding-bottom: 1rem;">
+            <button mat-raised-button color ="primary" [disabled] = "disableSubmit" (click) = "trySubmit()">Submit</button>
+            <button mat-raised-button color ="primary">Cancel</button>
+         </span>
+      </div>
+   </div>
+</div>
+</div>

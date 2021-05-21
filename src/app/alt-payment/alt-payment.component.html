@@ -1,0 +1,53 @@
+<div class="bacb-content container">
+  <mat-expansion-panel [expanded]="true" class="mt-1" hideToggle>
+    <mat-expansion-panel-header class="panel-heading bacb-panel-header">
+      <mat-panel-title>
+        <h5 class="payment-header">
+          Payment
+        </h5>
+      </mat-panel-title>
+      <mat-panel-description class="summary-header icon">
+        <mat-icon class="payment-header">file</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="mt-2">
+      <h5>Make a Payment of ${{chargeAmount.toFixed(2)}}{{ chargeTitle ? ' to ' + chargeTitle : '' }}</h5>
+    </div>
+    <div *ngIf="showLoader" style="position:relative; text-align: center;">
+      <div #loaderRef>
+        <ng-content select=".ngxLoader" *ngIf="!hideLoader"></ng-content>
+      </div>
+      <img *ngIf="loaderRef.children.length === 0 && !hideLoader" src="{{loaderImage}}" />
+    </div>
+    <div class="error" *ngIf="errorMessage">Error</div>
+    <div class="errorInfoDiv" *ngIf="errorMessage">{{errorMessage}}</div>
+    <div *ngIf="showDropinUI && clientToken" ngxBraintreeDirective>
+
+      <div id="dropin-container"></div>
+
+      <div #buttonsRef>
+        <ng-content select=".ngxButtons"></ng-content>
+      </div>
+
+      <!-- No buttons are projected and no styles sent, so the default button (Purchase) with default styles will be used. -->
+      <div *ngIf="buttonsRef.children.length === 0">
+        <button [disabled]="!enablePayButton" *ngIf="showPayButton" (click)="enablePayment ? pay() :confirmPaymentMethod()">
+          {{enablePayment ? 'Make Payment' : 'Confirm Payment Method'}}
+        </button>
+      </div>
+      <div id="payment_nonce" style="display: none;"></div>
+    </div>
+    <div *ngIf="clientTokenNotReceived">
+      <div class="error">Error! Client token not received.</div>
+      <div class="errorInfoDiv">Make sure your clientTokenURL's JSON response is as shown below:
+        <pre>{{ '{' }}"token":"braintree_client_token_generated_on_your_server"{{'}'}}</pre>
+      </div>
+    </div>
+    <!-- <div *ngIf="ShowTestingInformation"> -->
+      <app-information
+        [BodyTextA]="'Credit Card Success'"
+        [BodyTextB]="'4111 1111 1111 1111'">
+      </app-information>
+    <!-- </div> -->
+  </mat-expansion-panel>
+</div>
